@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Centered Image Frame Wireframe</title>
+<style>
+:root{
+--frame-size: 90vmin;
+--small-size: 10.3vmin;
+--gap: 1.2vmin;
+--bg: #f3f4f6;
+--accent: #111827;
+--grow-duration: 2.2s;
+--shrink-duration: 0.5s;
+--scale: 20;
+}
+
+
+html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial}
+body{
+display:flex;align-items:center;justify-content:center;background:var(--bg);
+padding:0;box-sizing:border-box;
+}
+
+.title-block {  
+  position: absolute;
+  left: -55%;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-left: 2vmin;
+  font-family: 'Helvetica', sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 15vmin;
+  color: #ff8400;
+  line-height: 2;
+  z-index: 6;
+}
+
+.title-block-right {
+  position: absolute;
+  right: -45%;        
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; 
+  padding-left: 2vmin;
+  font-family: 'Helvetica', sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 15vmin;     
+  color: #003cff;       
+  line-height: 2;
+  z-index: 6;
+}
+
+
+.frame{
+  width:var(--frame-size);height:var(--frame-size);position:relative;
+  background:#000;
+  overflow: visible;
+  display:flex;align-items:center;justify-content:center;
+  border: .5px; 
+}
+
+.big-image{
+width:100%;height:100%;background-size:cover;background-position:center;
+}
+
+.small-wrapper{
+width:var(--small-size);height:var(--small-size);position:absolute;overflow:visible;
+pointer-events:auto;z-index:4;display:block;text-decoration:none;
+}
+
+.expander{
+width:100%;height:100%;background:rgba(255,255,255,0.36);
+display:flex;align-items:center;justify-content:center;font-size:1rem;color:var(--accent);
+user-select:none;cursor:pointer;
+transform: scale(1);
+transition: transform var(--shrink-duration) ease-in-out, opacity var(--shrink-duration) ease-in-out;
+will-change: transform, opacity;
+z-index:5;
+border: .5px solid black; 
+box-sizing: border-box;
+}
+
+.small-wrapper:hover .expander{
+transform: scale(var(--scale));
+transition-duration: var(--grow-duration);
+transition-timing-function: ease-in-out;
+pointer-events:none;
+}
+
+.tl .expander{ transform-origin: top left; }
+.br .expander{ transform-origin: bottom right; }
+
+.tl-1{ top:calc(var(--gap) + 25px); left:calc(var(--gap) - 5px); }
+.tl-2{ top:calc(var(--gap) + 139px); left:calc(var(--gap) - 5px); }
+.tl-3{ top:calc(var(--gap) + 253px); left:calc(var(--gap) - 5px); }
+.tl-4{ top:calc(var(--gap) + 367px); left:calc(var(--gap) - 5px); }
+
+.br-1{ top:calc(var(--gap) + 816px); left:calc(var(--gap) + 371px); }
+.br-2{ top:calc(var(--gap) + 816px); left:calc(var(--gap) + 482.5px); }
+.br-3{ top:calc(var(--gap) + 816px); left:calc(var(--gap) + 593px); }
+.br-4{ top:calc(var(--gap) + 816px); left:calc(var(--gap) + 704px); }
+.br-5{ top:calc(var(--gap) + 816px); left:calc(var(--gap) + 813px); }
+
+
+@media (max-width:780px){
+:root{ --small-size: 8vmin; --gap: 2vmin; --scale: 18; --grow-duration: 2.5s; --shrink-duration: 0.6s; }
+.expander{font-size:0.9rem}
+}
+</style>
+</head>
+<body>
+
+<script>
+const images = [
+  "fin",
+  "image2.png",
+  "image3.png" 
+];
+
+let current = 0;
+const bigImage = document.querySelector(".big-image");
+
+setInterval(() => {
+  // Fade out
+  bigImage.style.opacity = 0;
+
+  // After fade out, change image and fade in
+  setTimeout(() => {
+    current = (current + 1) % images.length;
+    bigImage.style.backgroundImage = `url('${images[current]}')`;
+    bigImage.style.opacity = 1;
+  }, 800); // matches the transition duration
+}, 3000); // change every 3 seconds
+</script>
+
+    
+<main class="frame" role="main" aria-label="Centered image frame">
+<div class="big-image" style="background-image: url('FINAL\ Site\ Plan\ 2025\ 2dCOLORED.png');"></div>
+
+
+<div class="title-block">
+    <div>T-BURG</div>
+    <div>LAND</div>
+    <div>TRUST</div>
+  </div>
+
+
+<div class="title-block-right">
+  <div>PRO-</div>
+  <div>JECT</div>
+  <div>01</div>
+  <div></div>
+</div>
+
+<a href="page1.html" class="small-wrapper tl tl-1"><div class="expander"></div></a>
+<a href="page2.html" class="small-wrapper tl tl-2"><div class="expander"></div></a>
+<a href="page3.html" class="small-wrapper tl tl-3"><div class="expander"></div></a>
+<a href="page4.html" class="small-wrapper tl tl-4"><div class="expander"></div></a>
+
+
+<a href="page5.html" class="small-wrapper br br-1"><div class="expander"></div></a>
+<a href="page6.html" class="small-wrapper br br-2"><div class="expander"></div></a>
+<a href="page7.html" class="small-wrapper br br-3"><div class="expander"></div></a>
+<a href="page8.html" class="small-wrapper br br-4"><div class="expander"></div></a>
+<a href="page9.html" class="small-wrapper br br-5"><div class="expander"></div>
+
+</a>
+</main>
+
+</body>
+</html>
