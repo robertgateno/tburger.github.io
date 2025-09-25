@@ -3,178 +3,215 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Centered Image Frame Wireframe</title>
+<title>Centered Image Frame with Marquee</title>
 <style>
 :root{
---frame-size: 90vmin;
---small-size: 10.3vmin;
---gap: 1.2vmin;
---bg: #f3f4f6;
---accent: #111827;
---grow-duration: 2.2s;
---shrink-duration: 0.5s;
---scale: 20;
+  --frame-size: 90vmin;
+  --small-size: 10.3vmin;
+  --gap: 1.2vmin;
+  --bg: #f3f4f6;
+  --accent: #111827;
+  --grow-duration: 2.2s;
+  --shrink-duration: 0.5s;
+  --scale: 20;
+  --banner-color: #ff8400;
+  --banner-size: 2.2vmin;
+  --scroll-speed-horizontal: 60s;
+  --scroll-speed-vertical: 80s;
 }
 
-
-html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial}
-body{
-display:flex;align-items:center;justify-content:center;background:var(--bg);
-padding:0;box-sizing:border-box;
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;
+  background: var(--bg);
+  overflow: hidden;
+  position: relative;
 }
 
-.title-block {  
-  position: absolute;
-  left: -55%;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding-left: 2vmin;
-  font-family: 'Helvetica', sans-serif;
-  font-weight: bold;
-  text-transform: uppercase;
-  font-size: 15vmin;
-  color: #ff8400;
-  line-height: 2;
-  z-index: 6;
-}
-
-.title-block-right {
-  position: absolute;
-  right: -45%;        
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start; 
-  padding-left: 2vmin;
-  font-family: 'Helvetica', sans-serif;
-  font-weight: bold;
-  text-transform: uppercase;
-  font-size: 15vmin;     
-  color: #003cff;       
-  line-height: 2;
-  z-index: 6;
-}
-
-
+/* FRAME + IMAGE */
 .frame{
-  width:var(--frame-size);height:var(--frame-size);position:relative;
-  background:#000;
-  overflow: visible;
-  display:flex;align-items:center;justify-content:center;
-  border: .5px; 
+  width: var(--frame-size);
+  height: var(--frame-size);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
 }
-
 .big-image{
-width:100%;height:100%;background-size:cover;background-position:center;
+  width: 100%;
+  height: 100%;
+  background-image: url('FINAL Site Plan 2025 2dCOLORED.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
+/* SMALL BOXES */
 .small-wrapper{
-width:var(--small-size);height:var(--small-size);position:absolute;overflow:visible;
-pointer-events:auto;z-index:4;display:block;text-decoration:none;
+  width: var(--small-size);
+  height: var(--small-size);
+  position: absolute;
+  overflow: visible;
+  pointer-events: auto;
+  z-index: 4;
+  display: block;
 }
-
 .expander{
-width:100%;height:100%;background:rgba(255,255,255,0.36);
-display:flex;align-items:center;justify-content:center;font-size:1rem;color:var(--accent);
-user-select:none;cursor:pointer;
-transform: scale(1);
-transition: transform var(--shrink-duration) ease-in-out, opacity var(--shrink-duration) ease-in-out;
-will-change: transform, opacity;
-z-index:5;
-border: .5px solid black; 
-box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  background: rgba(255,255,255,0.36);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  color: var(--accent);
+  user-select: none;
+  cursor: pointer;
+  transform: scale(1);
+  transition: transform var(--shrink-duration) ease-in-out, opacity var(--shrink-duration) ease-in-out;
+  will-change: transform, opacity;
+  z-index: 5;
+  border: .5px solid black;
+  box-sizing: border-box;
 }
-
 .small-wrapper:hover .expander{
-transform: scale(var(--scale));
-transition-duration: var(--grow-duration);
-transition-timing-function: ease-in-out;
-pointer-events:none;
+  transform: scale(var(--scale));
+  transition-duration: var(--grow-duration);
+  transition-timing-function: ease-in-out;
+  pointer-events: none;
+}
+.tl-1 { top: 4%; left: .8%; }
+.tl-2 { top: 16%; left: .8%; }
+.tl-3 { top: 28%; left: .8%; }
+.tl-4 { top: 40.5%; left: .8%; }
+.br-1 { top: 88.5%; left: 41%; }
+.br-2 { top: 88.5%; left: 52.7%; }
+.br-3 { top: 88.5%; left: 64.6%; }
+.br-4 { top: 88.5%; left: 76.3%; }
+.br-5 { top: 88.5%; left: 88.2%; }
+
+/* MARQUEES */
+.marquee {
+  position: fixed;
+  color: var(--banner-color);
+  font-size: var(--banner-size);
+  font-weight: bold;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  z-index: 10;
+}
+.marquee-text {
+  display: flex;
+}
+.marquee span {
+  padding-right: 4rem;
 }
 
-.tl .expander{ transform-origin: top left; }
-.br .expander{ transform-origin: bottom right; }
+/* Top */
+.marquee-top {
+  top:0; left:0; width:100%; height:var(--banner-size);
+}
+.marquee-top .marquee-text {
+  animation: scrollLeft var(--scroll-speed-horizontal) linear infinite;
+}
 
-.tl-1{ top:calc(var(--gap) + 25px); left:calc(var(--gap) - 5px); }
-.tl-2{ top:calc(var(--gap) + 139px); left:calc(var(--gap) - 5px); }
-.tl-3{ top:calc(var(--gap) + 253px); left:calc(var(--gap) - 5px); }
-.tl-4{ top:calc(var(--gap) + 367px); left:calc(var(--gap) - 5px); }
+/* Bottom */
+.marquee-bottom {
+  bottom:0; left:0; width:100%; height:var(--banner-size);
+}
+.marquee-bottom .marquee-text {
+  animation: scrollLeft var(--scroll-speed-horizontal) linear infinite;
+}
 
-.br-1{ top:calc(var(--gap) + 816px); left:calc(var(--gap) + 371px); }
-.br-2{ top:calc(var(--gap) + 816px); left:calc(var(--gap) + 482.5px); }
-.br-3{ top:calc(var(--gap) + 816px); left:calc(var(--gap) + 593px); }
-.br-4{ top:calc(var(--gap) + 816px); left:calc(var(--gap) + 704px); }
-.br-5{ top:calc(var(--gap) + 816px); left:calc(var(--gap) + 813px); }
+/* Left */
+.marquee-left {
+  top:0; left:0; height:100%; width:var(--banner-size);
+  display: flex;
+  overflow: hidden;
+}
+.marquee-left .marquee-text {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  flex-direction: column;
+  animation: scrollUp var(--scroll-speed-vertical) linear infinite;
+}
 
+/* Right */
+.marquee-right {
+  top:0; right:0; height:100%; width:var(--banner-size);
+  display: flex;
+  overflow: hidden;
+}
+.marquee-right .marquee-text {
+  writing-mode: vertical-rl;
+  flex-direction: column;
+  animation: scrollUp var(--scroll-speed-vertical) linear infinite;
+}
 
-@media (max-width:780px){
-:root{ --small-size: 8vmin; --gap: 2vmin; --scale: 18; --grow-duration: 2.5s; --shrink-duration: 0.6s; }
-.expander{font-size:0.9rem}
+/* ANIMATIONS */
+@keyframes scrollLeft {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes scrollUp {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
 }
 </style>
 </head>
 <body>
 
-<script>
-const images = [
-  "fin",
-  "image2.png",
-  "image3.png" 
-];
+<!-- Frame with background image -->
+<main class="frame">
+  <div class="big-image"></div>
 
-let current = 0;
-const bigImage = document.querySelector(".big-image");
+  <!-- Small boxes -->
+  <a href="page1.html" class="small-wrapper tl-1"><div class="expander"></div></a>
+  <a href="page2.html" class="small-wrapper tl-2"><div class="expander"></div></a>
+  <a href="page3.html" class="small-wrapper tl-3"><div class="expander"></div></a>
+  <a href="page4.html" class="small-wrapper tl-4"><div class="expander"></div></a>
+  <a href="page5.html" class="small-wrapper br-1"><div class="expander"></div></a>
+  <a href="page6.html" class="small-wrapper br-2"><div class="expander"></div></a>
+  <a href="page7.html" class="small-wrapper br-3"><div class="expander"></div></a>
+  <a href="page8.html" class="small-wrapper br-4"><div class="expander"></div></a>
+  <a href="page9.html" class="small-wrapper br-5"><div class="expander"></div></a>
+</main>
 
-setInterval(() => {
-  // Fade out
-  bigImage.style.opacity = 0;
-
-  // After fade out, change image and fade in
-  setTimeout(() => {
-    current = (current + 1) % images.length;
-    bigImage.style.backgroundImage = `url('${images[current]}')`;
-    bigImage.style.opacity = 1;
-  }, 800); // matches the transition duration
-}, 3000); // change every 3 seconds
-</script>
-
-    
-<main class="frame" role="main" aria-label="Centered image frame">
-<div class="big-image" style="background-image: url('FINAL\ Site\ Plan\ 2025\ 2dCOLORED.png');"></div>
-
-
-<div class="title-block">
-    <div>T-BURG</div>
-    <div>LAND</div>
-    <div>TRUST</div>
+<!-- MARQUEES -->
+<div class="marquee marquee-top">
+  <div class="marquee-text">
+    <span>A SPECULATION ON AN AFFORDABLE HOUSING SOLUTION IN TRUMANSBURG, TOMPKINS COUNTY, NEW YORK. THE VILLAGE OF TRUMANSBURG, STRUGGLING WITH AN INFLATED COST OF LIVING, IS IN DIRE NEED OF AFFORDABLE HOUSING. THROUGH THE COMMUNITY LAND TRUST OWNERSHIP MODEL, SPONSORED BY NEW YORK STATE AND ITHACA NEIGHBORHOOD HOUSING SERVICES (INHS), THE PROJECT IS ABLE TO MEET ITS PRICE GOALS AND SATISFY THE IDEALS BEHIND FAMILY HOME OWNERSHIP. THIS PROJECT WAS DONE IN COLLABORATION WITH THE TRUMANSBURG BOARD OF ZONING AND INHS. TRUMANSBURG IS FACING AN EDUCATION CRISIS; STUDENT FLIGHT, A PERVASIVE ISSUE ACROSS AMERICAN SMALL TOWNS HAS PLAGUED THEM, LEADING TO BUDGET SHORTFALLS AND STAFFING LAYOFFS. THIS PROPOSAL FOR AN AFFORDABLE HOUSING SOLUTION INTEGRATES SPACES TO SUSTAIN EDUCATION IN TRUMANSBURG. IN THIS PROJECT, YOU WILL FIND THE UNIT PLANS, EDUCATIONAL CENTERS, COMMUNITY CENTERS, AND SPECULATIONS ON UNIT AND COMMUNITY RE-PURPOSING IN THE EVENT THE CLT PROVES UNSUSTAINABLE.<span>
+    <span>A SPECULATION ON AN AFFORDABLE HOUSING SOLUTION IN TRUMANSBURG, TOMPKINS COUNTY, NEW YORK. THE VILLAGE OF TRUMANSBURG, STRUGGLING WITH AN INFLATED COST OF LIVING, IS IN DIRE NEED OF AFFORDABLE HOUSING. THROUGH THE COMMUNITY LAND TRUST OWNERSHIP MODEL, SPONSORED BY NEW YORK STATE AND ITHACA NEIGHBORHOOD HOUSING SERVICES (INHS), THE PROJECT IS ABLE TO MEET ITS PRICE GOALS AND SATISFY THE IDEALS BEHIND FAMILY HOME OWNERSHIP. THIS PROJECT WAS DONE IN COLLABORATION WITH THE TRUMANSBURG BOARD OF ZONING AND INHS. TRUMANSBURG IS FACING AN EDUCATION CRISIS; STUDENT FLIGHT, A PERVASIVE ISSUE ACROSS AMERICAN SMALL TOWNS HAS PLAGUED THEM, LEADING TO BUDGET SHORTFALLS AND STAFFING LAYOFFS. THIS PROPOSAL FOR AN AFFORDABLE HOUSING SOLUTION INTEGRATES SPACES TO SUSTAIN EDUCATION IN TRUMANSBURG. IN THIS PROJECT, YOU WILL FIND THE UNIT PLANS, EDUCATIONAL CENTERS, COMMUNITY CENTERS, AND SPECULATIONS ON UNIT AND COMMUNITY RE-PURPOSING IN THE EVENT THE CLT PROVES UNSUSTAINABLE.<span>
   </div>
-
-
-<div class="title-block-right">
-  <div>PRO-</div>
-  <div>JECT</div>
-  <div>01</div>
-  <div></div>
 </div>
 
-<a href="page1.html" class="small-wrapper tl tl-1"><div class="expander"></div></a>
-<a href="page2.html" class="small-wrapper tl tl-2"><div class="expander"></div></a>
-<a href="page3.html" class="small-wrapper tl tl-3"><div class="expander"></div></a>
-<a href="page4.html" class="small-wrapper tl tl-4"><div class="expander"></div></a>
+<div class="marquee marquee-bottom">
+  <div class="marquee-text">
+    <span>A SPECULATION ON AN AFFORDABLE HOUSING SOLUTION IN TRUMANSBURG, TOMPKINS COUNTY, NEW YORK. THE VILLAGE OF TRUMANSBURG, STRUGGLING WITH AN INFLATED COST OF LIVING, IS IN DIRE NEED OF AFFORDABLE HOUSING. THROUGH THE COMMUNITY LAND TRUST OWNERSHIP MODEL, SPONSORED BY NEW YORK STATE AND ITHACA NEIGHBORHOOD HOUSING SERVICES (INHS), THE PROJECT IS ABLE TO MEET ITS PRICE GOALS AND SATISFY THE IDEALS BEHIND FAMILY HOME OWNERSHIP. THIS PROJECT WAS DONE IN COLLABORATION WITH THE TRUMANSBURG BOARD OF ZONING AND INHS. TRUMANSBURG IS FACING AN EDUCATION CRISIS; STUDENT FLIGHT, A PERVASIVE ISSUE ACROSS AMERICAN SMALL TOWNS HAS PLAGUED THEM, LEADING TO BUDGET SHORTFALLS AND STAFFING LAYOFFS. THIS PROPOSAL FOR AN AFFORDABLE HOUSING SOLUTION INTEGRATES SPACES TO SUSTAIN EDUCATION IN TRUMANSBURG. IN THIS PROJECT, YOU WILL FIND THE UNIT PLANS, EDUCATIONAL CENTERS, COMMUNITY CENTERS, AND SPECULATIONS ON UNIT AND COMMUNITY RE-PURPOSING IN THE EVENT THE CLT PROVES UNSUSTAINABLE.<span>
+    <span>A SPECULATION ON AN AFFORDABLE HOUSING SOLUTION IN TRUMANSBURG, TOMPKINS COUNTY, NEW YORK. THE VILLAGE OF TRUMANSBURG, STRUGGLING WITH AN INFLATED COST OF LIVING, IS IN DIRE NEED OF AFFORDABLE HOUSING. THROUGH THE COMMUNITY LAND TRUST OWNERSHIP MODEL, SPONSORED BY NEW YORK STATE AND ITHACA NEIGHBORHOOD HOUSING SERVICES (INHS), THE PROJECT IS ABLE TO MEET ITS PRICE GOALS AND SATISFY THE IDEALS BEHIND FAMILY HOME OWNERSHIP. THIS PROJECT WAS DONE IN COLLABORATION WITH THE TRUMANSBURG BOARD OF ZONING AND INHS. TRUMANSBURG IS FACING AN EDUCATION CRISIS; STUDENT FLIGHT, A PERVASIVE ISSUE ACROSS AMERICAN SMALL TOWNS HAS PLAGUED THEM, LEADING TO BUDGET SHORTFALLS AND STAFFING LAYOFFS. THIS PROPOSAL FOR AN AFFORDABLE HOUSING SOLUTION INTEGRATES SPACES TO SUSTAIN EDUCATION IN TRUMANSBURG. IN THIS PROJECT, YOU WILL FIND THE UNIT PLANS, EDUCATIONAL CENTERS, COMMUNITY CENTERS, AND SPECULATIONS ON UNIT AND COMMUNITY RE-PURPOSING IN THE EVENT THE CLT PROVES UNSUSTAINABLE.<span>
+  </div>
+</div>
 
+<div class="marquee marquee-left">
+  <div class="marquee-text">
+    <span>A SPECULATION ON AN AFFORDABLE HOUSING SOLUTION IN TRUMANSBURG, TOMPKINS COUNTY, NEW YORK. THE VILLAGE OF TRUMANSBURG, STRUGGLING WITH AN INFLATED COST OF LIVING, IS IN DIRE NEED OF AFFORDABLE HOUSING. THROUGH THE COMMUNITY LAND TRUST OWNERSHIP MODEL, SPONSORED BY NEW YORK STATE AND ITHACA NEIGHBORHOOD HOUSING SERVICES (INHS), THE PROJECT IS ABLE TO MEET ITS PRICE GOALS AND SATISFY THE IDEALS BEHIND FAMILY HOME OWNERSHIP. THIS PROJECT WAS DONE IN COLLABORATION WITH THE TRUMANSBURG BOARD OF ZONING AND INHS. TRUMANSBURG IS FACING AN EDUCATION CRISIS; STUDENT FLIGHT, A PERVASIVE ISSUE ACROSS AMERICAN SMALL TOWNS HAS PLAGUED THEM, LEADING TO BUDGET SHORTFALLS AND STAFFING LAYOFFS. THIS PROPOSAL FOR AN AFFORDABLE HOUSING SOLUTION INTEGRATES SPACES TO SUSTAIN EDUCATION IN TRUMANSBURG. IN THIS PROJECT, YOU WILL FIND THE UNIT PLANS, EDUCATIONAL CENTERS, COMMUNITY CENTERS, AND SPECULATIONS ON UNIT AND COMMUNITY RE-PURPOSING IN THE EVENT THE CLT PROVES UNSUSTAINABLE.<span>
+    <span>A SPECULATION ON AN AFFORDABLE HOUSING SOLUTION IN TRUMANSBURG, TOMPKINS COUNTY, NEW YORK. THE VILLAGE OF TRUMANSBURG, STRUGGLING WITH AN INFLATED COST OF LIVING, IS IN DIRE NEED OF AFFORDABLE HOUSING. THROUGH THE COMMUNITY LAND TRUST OWNERSHIP MODEL, SPONSORED BY NEW YORK STATE AND ITHACA NEIGHBORHOOD HOUSING SERVICES (INHS), THE PROJECT IS ABLE TO MEET ITS PRICE GOALS AND SATISFY THE IDEALS BEHIND FAMILY HOME OWNERSHIP. THIS PROJECT WAS DONE IN COLLABORATION WITH THE TRUMANSBURG BOARD OF ZONING AND INHS. TRUMANSBURG IS FACING AN EDUCATION CRISIS; STUDENT FLIGHT, A PERVASIVE ISSUE ACROSS AMERICAN SMALL TOWNS HAS PLAGUED THEM, LEADING TO BUDGET SHORTFALLS AND STAFFING LAYOFFS. THIS PROPOSAL FOR AN AFFORDABLE HOUSING SOLUTION INTEGRATES SPACES TO SUSTAIN EDUCATION IN TRUMANSBURG. IN THIS PROJECT, YOU WILL FIND THE UNIT PLANS, EDUCATIONAL CENTERS, COMMUNITY CENTERS, AND SPECULATIONS ON UNIT AND COMMUNITY RE-PURPOSING IN THE EVENT THE CLT PROVES UNSUSTAINABLE.<span>
+  </div>
+</div>
 
-<a href="page5.html" class="small-wrapper br br-1"><div class="expander"></div></a>
-<a href="page6.html" class="small-wrapper br br-2"><div class="expander"></div></a>
-<a href="page7.html" class="small-wrapper br br-3"><div class="expander"></div></a>
-<a href="page8.html" class="small-wrapper br br-4"><div class="expander"></div></a>
-<a href="page9.html" class="small-wrapper br br-5"><div class="expander"></div>
-
-</a>
-</main>
+<div class="marquee marquee-right">
+  <div class="marquee-text">
+    <span>A SPECULATION ON AN AFFORDABLE HOUSING SOLUTION IN TRUMANSBURG, TOMPKINS COUNTY, NEW YORK. THE VILLAGE OF TRUMANSBURG, STRUGGLING WITH AN INFLATED COST OF LIVING, IS IN DIRE NEED OF AFFORDABLE HOUSING. THROUGH THE COMMUNITY LAND TRUST OWNERSHIP MODEL, SPONSORED BY NEW YORK STATE AND ITHACA NEIGHBORHOOD HOUSING SERVICES (INHS), THE PROJECT IS ABLE TO MEET ITS PRICE GOALS AND SATISFY THE IDEALS BEHIND FAMILY HOME OWNERSHIP. THIS PROJECT WAS DONE IN COLLABORATION WITH THE TRUMANSBURG BOARD OF ZONING AND INHS. TRUMANSBURG IS FACING AN EDUCATION CRISIS; STUDENT FLIGHT, A PERVASIVE ISSUE ACROSS AMERICAN SMALL TOWNS HAS PLAGUED THEM, LEADING TO BUDGET SHORTFALLS AND STAFFING LAYOFFS. THIS PROPOSAL FOR AN AFFORDABLE HOUSING SOLUTION INTEGRATES SPACES TO SUSTAIN EDUCATION IN TRUMANSBURG. IN THIS PROJECT, YOU WILL FIND THE UNIT PLANS, EDUCATIONAL CENTERS, COMMUNITY CENTERS, AND SPECULATIONS ON UNIT AND COMMUNITY RE-PURPOSING IN THE EVENT THE CLT PROVES UNSUSTAINABLE.<span>
+    <span>A SPECULATION ON AN AFFORDABLE HOUSING SOLUTION IN TRUMANSBURG, TOMPKINS COUNTY, NEW YORK. THE VILLAGE OF TRUMANSBURG, STRUGGLING WITH AN INFLATED COST OF LIVING, IS IN DIRE NEED OF AFFORDABLE HOUSING. THROUGH THE COMMUNITY LAND TRUST OWNERSHIP MODEL, SPONSORED BY NEW YORK STATE AND ITHACA NEIGHBORHOOD HOUSING SERVICES (INHS), THE PROJECT IS ABLE TO MEET ITS PRICE GOALS AND SATISFY THE IDEALS BEHIND FAMILY HOME OWNERSHIP. THIS PROJECT WAS DONE IN COLLABORATION WITH THE TRUMANSBURG BOARD OF ZONING AND INHS. TRUMANSBURG IS FACING AN EDUCATION CRISIS; STUDENT FLIGHT, A PERVASIVE ISSUE ACROSS AMERICAN SMALL TOWNS HAS PLAGUED THEM, LEADING TO BUDGET SHORTFALLS AND STAFFING LAYOFFS. THIS PROPOSAL FOR AN AFFORDABLE HOUSING SOLUTION INTEGRATES SPACES TO SUSTAIN EDUCATION IN TRUMANSBURG. IN THIS PROJECT, YOU WILL FIND THE UNIT PLANS, EDUCATIONAL CENTERS, COMMUNITY CENTERS, AND SPECULATIONS ON UNIT AND COMMUNITY RE-PURPOSING IN THE EVENT THE CLT PROVES UNSUSTAINABLE.<span>
+  </div>
+</div>
 
 </body>
 </html>
