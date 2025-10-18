@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .checkbox {
+            width: 30px;
+            height: 30px;
+            border: 2px solid black;
+            display: inline-block;
+            cursor: pointer;
+        }
+        .checkbox.checked {
+            background: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="checkbox" onclick="this.classList.toggle('checked')"></div>
+    <span>Click the box</span>
+
+    <script>
+        console.log('Page loaded');
+    </script>
+</body>
+</html>

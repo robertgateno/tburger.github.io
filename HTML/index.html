@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Affordable Housing Project</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #fff;
+            color: #333;
+        }
+
+        .breadcrumb {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            z-index: 1000;
+            display: flex;
+            gap: 0.5rem;
+            font-size: 1rem;
+            color: #666;
+        }
+
+        .breadcrumb-item {
+            cursor: pointer;
+        }
+
+        .breadcrumb-item:hover {
+            color: #000;
+        }
+
+        .section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .section h1 {
+            font-size: 4rem;
+            font-weight: 700;
+        }
+
+        .section h2 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .section p {
+            font-size: 1.5rem;
+            color: #666;
+            margin-bottom: 3rem;
+        }
+
+        .options {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+        }
+
+        .option-btn {
+            padding: 1.5rem 3rem;
+            font-size: 1.5rem;
+            background: #f5f5f5;
+            border: 2px solid #333;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .option-btn:hover {
+            background: #333;
+            color: #fff;
+        }
+
+        .full-page-image {
+            min-height: 100vh;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .full-page-image h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            color: #000;
+            padding: 2rem;
+            max-width: 1200px;
+        }
+
+        .checkbox-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: #f5f5f5;
+            border: 2px solid #333;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            width: 500px;
+        }
+
+        .simple-checkbox {
+            width: 30px;
+            height: 30px;
+            border: 2px solid black;
+            border-radius: 6px;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+        }
+
+        .simple-checkbox.checked {
+            background: black;
+        }
+
+        .simple-checkbox:hover {
+            transform: scale(1.05);
+        }
+
+        .image-box {
+            width: 17in;
+            height: 11in;
+            background: #f5f5f5;
+            border: 2px solid #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+
+        .image-boxes {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .next-btn {
+            padding: 1.5rem 3rem;
+            font-size: 1.5rem;
+            background: #333;
+            color: #fff;
+            border: 2px solid #333;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 2rem;
+        }
+
+        .checkbox-row span {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="breadcrumb" id="breadcrumb"></div>
+
+    <!-- HOME SECTIONS -->
+    <div id="homeContent">
+        <div class="section">
+            <h1>Planning An Affordable Housing Project</h1>
+        </div>
+        <div class="section">
+            <h1>Trumansburg, New York<br>A Case Study In Affordable Housing</h1>
+        </div>
+        <div class="section">
+            <h1>Section 1. Urgency</h1>
+        </div>
+        <div class="section">
+            <div>
+                <h2>Section 1. Urgency</h2>
+                <p>How urgent are your identified site's housing needs?</p>
+                <div class="options">
+                    <button class="option-btn" onclick="goToPage('low')">Low</button>
+                    <button class="option-btn" onclick="goToPage('medium')">Medium</button>
+                    <button class="option-btn" onclick="goToPage('high')">High</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LOW PAGE -->
+    <div id="lowContent" class="hidden">
+        <div class="full-page-image" style="background-image: url('lowDensity.jpg');">
+            <h1>Planning for a low-density affordable housing solution</h1>
+        </div>
+        <div class="section">
+            <div>
+                <h2>Section 2. Housing Types</h2>
+                <p>Select the housing types for your project</p>
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <div class="checkbox-row">
+                        <div class="simple-checkbox" onclick="toggleCheckbox('low', 'studio', this)"></div>
+                        <span>Studio</span>
+                    </div>
+                    <div class="checkbox-row">
+                        <div class="simple-checkbox" onclick="toggleCheckbox('low', 'one-bedroom', this)"></div>
+                        <span>One Bedroom</span>
+                    </div>
+                    <div class="checkbox-row">
+                        <div class="simple-checkbox" onclick="toggleCheckbox('low', 'two-bedroom', this)"></div>
+                        <span>Two Bedroom</span>
+                    </div>
+                    <div class="checkbox-row">
+                        <div class="simple-checkbox" onclick="toggleCheckbox('low', 'three-bedroom', this)"></div>
+                        <span>Three Bedroom</span>
+                    </div>
+                    <button class="next-btn" onclick="goToSection3('low')">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MEDIUM PAGE -->
+    <div id="mediumContent" class="hidden">
+        <div class="full-page-image" style="background-image: url('mediumDensity.jpg');">
+            <h1>Planning for a medium-density affordable housing solution</h1>
+        </div>
+        <div class="section">
+            <div>
+                <h2>Section 2. Housing Types</h2>
+                <p>Select the housing types for your project</p>
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <div class="checkbox-row">
+                        <div class="simple-checkbox" onclick="toggleCheckbox('medium', 'studio', this)"></div>
+                        <span>Studio</span>
+                    </div>
+                    <div class="checkbox-row">
+                        <div class="simple-checkbox" onclick="toggleCheckbox('medium', 'one-bedroom', this)"></div>
+                        <span>One Bedroom</span>
+                    </div>
+                    <div class="checkbox-row">
+                        <div class="simple-checkbox" onclick="toggleCheckbox('medium', 'two-bedroom', this)"></div>
+                        <span>Two Bedroom</span>
+                    </div>
+                    <div class="checkbox-row">
+                        <div class="simple-checkbox" onclick="toggleCheckbox('medium', 'three-bedroom', this)"></div>
+                        <span>Three Bedroom</span>
+                    </div>
+                    <button class="next-btn" onclick="goToSection3('medium')">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HIGH PAGE -->
+    <div id="highContent" class="hidden">
+        <div class="full-page-image" style="background-image: url('highDensity.jpg');">
+            <h1>Planning for a high-density affordable housing solution</h1>
+        </div>
+        <div class="section">
+            <div>
+                <h2>Section 2. Housing Types</h2>
+                <p>Select the housing types for your project</p>
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <div class="checkbox-row">
+                        <div class="simple-checkbox" onclick="toggleCheckbox('high', 'studio', this)"></div>
+                        <span>Studio</span>
+                    </div>
+                    <div class="checkbox-row">
+                        <div class="simple-checkbox" onclick="toggleCheckbox('high', 'one-bedroom', this)"></div>
+                        <span>One Bedroom</span>
+                    </div>
+                    <div class="checkbox-row">
+                        <div class="simple-checkbox" onclick="toggleCheckbox('high', 'two-bedroom', this)"></div>
+                        <span>Two Bedroom</span>
+                    </div>
+                    <div class="checkbox-row">
+                        <div class="simple-checkbox" onclick="toggleCheckbox('high', 'three-bedroom', this)"></div>
+                        <span>Three Bedroom</span>
+                    </div>
+                    <button class="next-btn" onclick="goToSection3('high')">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 3 PAGES -->
+    <div id="section3Low" class="hidden">
+        <div class="section">
+            <div>
+                <h2>Section 3. Unit Details</h2>
+                <div class="image-boxes"></div>
+            </div>
+        </div>
+        <div class="section">
+            <div>
+                <h2>Section 4. Ownership Models</h2>
+                <p>Select the ownership models for your project</p>
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <div class="checkbox-row">
+                        <div class="simple-checkbox" onclick="toggleOwnership('low', 'clt', this)"></div>
+                        <span>Community Land Trust</span>
+                    </div>
+                    <div class="checkbox-row">
+                        <div class="simple-checkbox" onclick="toggleOwnership('low', 'private', this)"></div>
+                        <span>Private Developer</span>
+                    </div>
+                    <div class="checkbox-row">
+                        <div class="simple-checkbox" onclick="toggleOwnership('low', 'public', this)"></div>
+                        <span>Public Developer</span>
+                    </div>
+                    <button class="next-btn" onclick="goToSection5('low')">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="section3Medium" class="hidden">
+        <div class="section">
+            <div>
+                <h2>Section 3. Unit Details</h2>
+                <div class="image-boxes"></div>
+            </div>
+        </div>
+        <div class="section">
+            <div>
+                <h2>Section 4. Ownership Models</h2>
+                <p>Select the ownership models for your project</p>
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <div class="checkbox-row">
+                        <div class="simple-checkbox" onclick="toggleOwnership('medium', 'clt', this)"></div>
+                        <span>Community Land Trust</span>
+                    </div>
+                    <div class="checkbox-row">
+                        <div class="simple-checkbox" onclick="toggleOwnership('medium', 'private', this)"></div>
+                        <span>Private Developer</span>
+                    </div>
+                    <div class="checkbox-row">
+                        <div class="simple-checkbox" onclick="toggleOwnership('medium', 'public', this)"></div>
+                        <span>Public Developer</span>
+                    </div>
+                    <button class="next-btn" onclick="goToSection5('medium')">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="section3High" class="hidden">
+        <div class="section">
+            <div>
+                <h2>Section 3. Unit Details</h2>
+                <div class="image-boxes"></div>
+            </div>
+        </div>
+        <div class="section">
+            <div>
+                <h2>Section 4. Ownership Models</h2>
+                <p>Select the ownership models for your project</p>
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <div class="checkbox-row">
+                        <div class="simple-checkbox" onclick="toggleOwnership('high', 'clt', this)"></div>
+                        <span>Community Land Trust</span>
+                    </div>
+                    <div class="checkbox-row">
+                        <div class="simple-checkbox" onclick="toggleOwnership('high', 'private', this)"></div>
+                        <span>Private Developer</span>
+                    </div>
+                    <div class="checkbox-row">
+                        <div class="simple-checkbox" onclick="toggleOwnership('high', 'public', this)"></div>
+                        <span>Public Developer</span>
+                    </div>
+                    <button class="next-btn" onclick="goToSection5('high')">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var currentPage = 'home';
+        var selections = {
+            low: [],
+            medium: [],
+            high: []
+        };
+
+        var ownershipSelections = {
+            low: [],
+            medium: [],
+            high: []
+        };
+
+        // Images for each unit type
+        var unitImages = {
+            'studio': 'studioPlan.pdf',
+            'one-bedroom': '1bedPlan.pdf',
+            'two-bedroom': '2bedPlan.pdf',
+            'three-bedroom': '3bedPlan.pdf'
+        };
+
+        var unitNames = {
+            'studio': 'Studio',
+            'one-bedroom': 'One Bedroom',
+            'two-bedroom': 'Two Bedroom',
+            'three-bedroom': 'Three Bedroom'
+        };
+
+        function toggleCheckbox(page, type, element) {
+            element.classList.toggle('checked');
+            
+            var index = selections[page].indexOf(type);
+            if (index > -1) {
+                selections[page].splice(index, 1);
+            } else {
+                selections[page].push(type);
+            }
+            
+            console.log(page + ' selections:', selections[page]);
+        }
+
+        function goToSection3(page) {
+            var selected = selections[page];
+            if (selected.length === 0) {
+                alert('Please select at least one housing type');
+                return;
+            }
+            
+            // Create Section 3 content with selected unit types
+            createSection3(page, selected);
+            
+            // Hide current page, show section 3
+            document.getElementById(page + 'Content').classList.add('hidden');
+            document.getElementById('section3' + page.charAt(0).toUpperCase() + page.slice(1)).classList.remove('hidden');
+            
+            currentPage = page + '-section3';
+            window.scrollTo({ top: 0, behavior: 'auto' });
+            updateBreadcrumb();
+        }
+
+        function createSection3(page, selectedTypes) {
+            var container = document.getElementById('section3' + page.charAt(0).toUpperCase() + page.slice(1));
+            var boxContainer = container.querySelector('.image-boxes');
+            boxContainer.innerHTML = '';
+            
+            for (var i = 0; i < selectedTypes.length; i++) {
+                var type = selectedTypes[i];
+                var box = document.createElement('div');
+                box.className = 'image-box';
+                box.style.backgroundImage = 'url(' + unitImages[type] + ')';
+                box.style.backgroundSize = 'cover';
+                box.style.backgroundPosition = 'center';
+                box.style.position = 'relative';
+                
+                var label = document.createElement('div');
+                label.style.position = 'absolute';
+                label.style.bottom = '1rem';
+                label.style.right = '1rem';
+                label.style.color = '#666';
+                label.style.fontSize = '1rem';
+                label.style.fontWeight = '400';
+                label.textContent = unitNames[type];
+                
+                box.appendChild(label);
+                boxContainer.appendChild(box);
+            }
+        }
+
+        function toggleOwnership(page, type, element) {
+            element.classList.toggle('checked');
+            
+            var index = ownershipSelections[page].indexOf(type);
+            if (index > -1) {
+                ownershipSelections[page].splice(index, 1);
+            } else {
+                ownershipSelections[page].push(type);
+            }
+            
+            console.log(page + ' ownership selections:', ownershipSelections[page]);
+        }
+
+        function goToSection5(page) {
+            var selected = ownershipSelections[page];
+            if (selected.length === 0) {
+                alert('Please select at least one ownership model');
+                return;
+            }
+            
+            alert('Section 5 coming soon! You selected: ' + selected.join(', '));
+        }
+
+        function updateBreadcrumb() {
+            var breadcrumb = document.getElementById('breadcrumb');
+            breadcrumb.innerHTML = '<span class="breadcrumb-item" onclick="goToPage(\'home\')">Home</span>';
+
+            if (currentPage === 'low') {
+                breadcrumb.innerHTML += ' › <span class="breadcrumb-item">Low Urgency</span>';
+            } else if (currentPage === 'medium') {
+                breadcrumb.innerHTML += ' › <span class="breadcrumb-item">Medium Urgency</span>';
+            } else if (currentPage === 'high') {
+                breadcrumb.innerHTML += ' › <span class="breadcrumb-item">High Urgency</span>';
+            }
+        }
+
+        function goToPage(page) {
+            currentPage = page;
+
+            // Hide all
+            document.getElementById('homeContent').classList.add('hidden');
+            document.getElementById('lowContent').classList.add('hidden');
+            document.getElementById('mediumContent').classList.add('hidden');
+            document.getElementById('highContent').classList.add('hidden');
+            document.getElementById('section3Low').classList.add('hidden');
+            document.getElementById('section3Medium').classList.add('hidden');
+            document.getElementById('section3High').classList.add('hidden');
+
+            // Show selected
+            if (page === 'home') {
+                document.getElementById('homeContent').classList.remove('hidden');
+            } else if (page === 'low') {
+                document.getElementById('lowContent').classList.remove('hidden');
+            } else if (page === 'medium') {
+                document.getElementById('mediumContent').classList.remove('hidden');
+            } else if (page === 'high') {
+                document.getElementById('highContent').classList.remove('hidden');
+            }
+
+            window.scrollTo({ top: 0, behavior: 'auto' });
+            updateBreadcrumb();
+        }
+
+        updateBreadcrumb();
+    </script>
+</body>
+</html>
