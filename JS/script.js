@@ -294,12 +294,15 @@ function createSection3(page, selectedTypes) {
 }
 
 function toggleOwnershipCard(page, type, card) {
+    console.log('toggleOwnershipCard called - page:', page, 'type:', type);
+
     var container = card.closest('.section');
     var allCards = container.querySelectorAll('.ownership-card');
     var checkbox = card.querySelector('.simple-checkbox');
 
     if (card.classList.contains('selected')) {
         card.classList.toggle('expanded');
+        console.log('Card already selected, toggling expansion');
         return;
     }
 
@@ -313,6 +316,7 @@ function toggleOwnershipCard(page, type, card) {
     card.classList.add('expanded');
     checkbox.classList.add('checked');
     ownershipSelections[page] = [type];
+    console.log('Ownership set for', page, ':', ownershipSelections[page]);
 
     // Update ownership model on receipt
     var ownershipElement = document.getElementById('ownership-s3-' + page);
@@ -357,19 +361,20 @@ function toggleOwnershipCard(page, type, card) {
     console.log(page + ' ownership selection:', ownershipSelections[page]);
     console.log('Base budget:', baseBudget, 'Modifier:', modifier, 'Adjusted:', adjustedBudget, 'Remaining:', remaining);
 
-    // Enable/disable Next button for Section 3
+    // Enable Next button for Section 3 - ownership selection is valid
     var button = document.querySelector('#section3' + page.charAt(0).toUpperCase() + page.slice(1) + ' .next-btn-bottom');
+    console.log('Next button found:', button, 'for page:', page);
     if (button) {
+        // Always enable button once ownership is selected, even if over budget
+        // User can proceed to assets section and adjust there
+        button.disabled = false;
+        button.style.opacity = '1';
+        button.style.cursor = 'pointer';
+        button.title = '';
+
         if (remaining < 0) {
-            button.disabled = true;
-            button.style.opacity = '0.5';
-            button.style.cursor = 'not-allowed';
-            button.title = 'Over budget! Go back and reduce units.';
-        } else {
-            button.disabled = false;
-            button.style.opacity = '1';
-            button.style.cursor = 'pointer';
-            button.title = '';
+            // Just show warning in title, but keep button enabled
+            button.title = 'Warning: Over budget! You can adjust in the next section.';
         }
     }
 }
@@ -492,7 +497,7 @@ function goToSection5(page) {
 
     var remaining = adjustedBudget - totalUnitCost;
 
-    // Update Section 4 receipt budget info
+    // Update Section 4 receipt budget info (if elements exist)
     var budgetElement = document.getElementById('budget-s4-' + page);
     var unitsElement = document.getElementById('units-s4-' + page);
 
@@ -503,25 +508,27 @@ function goToSection5(page) {
         unitsElement.textContent = totalUnits;
     }
 
-    // Update unit mix
+    // Update unit mix (if element exists)
     var unitMixElement = document.getElementById('unit-mix-s4-' + page);
-    if (totalUnits === 0) {
-        unitMixElement.innerHTML = '<div class="unit-mix-empty">No units selected</div>';
-    } else {
-        var mixHTML = '';
-        for (var unitType in quantities[page]) {
-            var quantity = quantities[page][unitType];
-            if (quantity > 0) {
-                mixHTML += '<div class="unit-mix-item">';
-                mixHTML += '<span class="unit-type">' + unitNames[unitType] + '</span>';
-                mixHTML += '<span class="unit-count">' + quantity + '</span>';
-                mixHTML += '</div>';
+    if (unitMixElement) {
+        if (totalUnits === 0) {
+            unitMixElement.innerHTML = '<div class="unit-mix-empty">No units selected</div>';
+        } else {
+            var mixHTML = '';
+            for (var unitType in quantities[page]) {
+                var quantity = quantities[page][unitType];
+                if (quantity > 0) {
+                    mixHTML += '<div class="unit-mix-item">';
+                    mixHTML += '<span class="unit-type">' + unitNames[unitType] + '</span>';
+                    mixHTML += '<span class="unit-count">' + quantity + '</span>';
+                    mixHTML += '</div>';
+                }
             }
+            unitMixElement.innerHTML = mixHTML;
         }
-        unitMixElement.innerHTML = mixHTML;
     }
 
-    // Update ownership model
+    // Update ownership model (if element exists)
     var ownershipElement = document.getElementById('ownership-s4-' + page);
     var ownershipNames = {
         'clt': 'Community Land Trust',
@@ -696,6 +703,20 @@ function goToPage(page) {
 // Initialize breadcrumb on page load
 updateBreadcrumb();
 
+// Debug: Check if ownership next buttons exist and are enabled
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Page loaded, checking buttons...');
+
+    ['Low', 'Medium', 'High'].forEach(function(page) {
+        var btn = document.querySelector('#section3' + page + ' .next-btn-bottom');
+        console.log('Section3' + page + ' button:', btn);
+        if (btn) {
+            console.log('  - disabled:', btn.disabled);
+            console.log('  - opacity:', btn.style.opacity);
+        }
+    });
+});
+
 // Cover page advancement function
 function advanceCover(coverNumber) {
     // Hide all cover pages
@@ -707,13 +728,86 @@ function advanceCover(coverNumber) {
     document.getElementById('cover' + coverNumber).classList.remove('hidden');
 }
 
+// Street Grid Generation
+function createStreetGrid(viewport) {
+    var streetGrid = document.createElement('div');
+    streetGrid.className = 'street-grid';
+
+    var streetWidth = 40; // Width of streets
+    var blockSize = 320; // Size of each city block (4 lots x 80px)
+    var gridRows = 16; // 16x16 grid = 256 blocks
+    var gridCols = 16;
+
+    // Create horizontal streets (15 streets for 16 rows)
+    for (var i = 1; i < gridRows; i++) {
+        var streetEl = document.createElement('div');
+        streetEl.className = 'street-h';
+        streetEl.style.top = (blockSize * i + streetWidth * (i - 1)) + 'px';
+        streetEl.style.height = streetWidth + 'px';
+        streetGrid.appendChild(streetEl);
+    }
+
+    // Create vertical streets (15 streets for 16 columns)
+    for (var j = 1; j < gridCols; j++) {
+        var streetEl = document.createElement('div');
+        streetEl.className = 'street-v';
+        streetEl.style.left = (blockSize * j + streetWidth * (j - 1)) + 'px';
+        streetEl.style.width = streetWidth + 'px';
+        streetGrid.appendChild(streetEl);
+    }
+
+    // Create city blocks (256 blocks total)
+    // Randomly select blocks to be parks (about 5-8% of blocks)
+    var totalBlocks = gridRows * gridCols;
+    var numParks = Math.floor(totalBlocks * 0.06); // 6% will be parks (~15 parks)
+    var parkIndices = [];
+
+    // Generate random unique park indices
+    while (parkIndices.length < numParks) {
+        var randomIndex = Math.floor(Math.random() * totalBlocks);
+        if (parkIndices.indexOf(randomIndex) === -1) {
+            parkIndices.push(randomIndex);
+        }
+    }
+
+    var blockIndex = 0;
+    for (var row = 0; row < gridRows; row++) {
+        for (var col = 0; col < gridCols; col++) {
+            var blockEl = document.createElement('div');
+
+            // Check if this block should be a park
+            var isPark = parkIndices.indexOf(blockIndex) !== -1;
+            blockEl.className = isPark ? 'city-block park-block' : 'city-block';
+
+            var top = row * (blockSize + streetWidth);
+            var left = col * (blockSize + streetWidth);
+
+            blockEl.style.top = top + 'px';
+            blockEl.style.left = left + 'px';
+            blockEl.style.width = blockSize + 'px';
+            blockEl.style.height = blockSize + 'px';
+
+            streetGrid.appendChild(blockEl);
+            blockIndex++;
+        }
+    }
+
+    viewport.appendChild(streetGrid);
+}
+
 // Layout page functions
 function createLayoutIcons(page) {
-    var canvas = document.getElementById('layout-canvas-' + page);
-    canvas.innerHTML = ''; // Clear previous icons
+    var viewport = document.getElementById('layout-viewport-' + page);
+    viewport.innerHTML = ''; // Clear previous icons
+
+    // Create street grid first
+    createStreetGrid(viewport);
+
+    // Initialize zoom
+    applyZoom(page);
 
     var iconIndex = 0;
-    var gridSize = 80; // Space between icons
+    var gridSize = 100; // Space between icons (increased for larger icons)
 
     // Create icons for each unit
     for (var unitType in quantities[page]) {
@@ -721,17 +815,36 @@ function createLayoutIcons(page) {
         for (var i = 0; i < quantity; i++) {
             var icon = document.createElement('div');
             icon.className = 'layout-icon layout-icon-' + unitType;
-            icon.textContent = unitNames[unitType];
             icon.draggable = true;
             icon.id = 'icon-' + page + '-' + unitType + '-' + i;
 
+            // Set background image
+            icon.style.backgroundImage = 'url(' + unitImages[unitType] + ')';
+
+            // Add label
+            var label = document.createElement('div');
+            label.className = 'icon-label';
+            label.textContent = unitNames[unitType];
+            icon.appendChild(label);
+
             // Position icons in a grid initially
-            var col = iconIndex % 10;
-            var row = Math.floor(iconIndex / 10);
+            var col = iconIndex % 8;
+            var row = Math.floor(iconIndex / 8);
             icon.style.left = (col * gridSize + 20) + 'px';
             icon.style.top = (row * gridSize + 20) + 'px';
 
-            canvas.appendChild(icon);
+            // Add click handler for delete mode and select mode
+            (function(iconElement) {
+                iconElement.addEventListener('click', function() {
+                    if (selectMode[page]) {
+                        toggleIconSelection(page, iconElement);
+                    } else {
+                        deleteIcon(page, iconElement);
+                    }
+                });
+            })(icon);
+
+            viewport.appendChild(icon);
             iconIndex++;
         }
     }
@@ -741,64 +854,193 @@ function createLayoutIcons(page) {
         if (selectedAssets[page][assetType]) {
             var icon = document.createElement('div');
             icon.className = 'layout-icon layout-icon-asset';
-            icon.textContent = assetNames[assetType];
             icon.draggable = true;
             icon.id = 'icon-' + page + '-asset-' + assetType;
 
+            // Set background image
+            icon.style.backgroundImage = 'url(' + assetImages[assetType] + ')';
+
+            // Add label
+            var label = document.createElement('div');
+            label.className = 'icon-label';
+            label.textContent = assetNames[assetType];
+            icon.appendChild(label);
+
             // Position icons in a grid
-            var col = iconIndex % 10;
-            var row = Math.floor(iconIndex / 10);
+            var col = iconIndex % 8;
+            var row = Math.floor(iconIndex / 8);
             icon.style.left = (col * gridSize + 20) + 'px';
             icon.style.top = (row * gridSize + 20) + 'px';
 
-            canvas.appendChild(icon);
+            // Add click handler for delete mode and select mode
+            (function(iconElement) {
+                iconElement.addEventListener('click', function() {
+                    if (selectMode[page]) {
+                        toggleIconSelection(page, iconElement);
+                    } else {
+                        deleteIcon(page, iconElement);
+                    }
+                });
+            })(icon);
+
+            viewport.appendChild(icon);
             iconIndex++;
         }
     }
 
     // Enable drag and drop
-    enableDragAndDrop(canvas);
+    enableDragAndDrop(viewport);
+
+    // Calculate initial density
+    updateDensityDisplay(page);
+
+    // Setup zoom with mouse wheel
+    setupZoom(page);
 }
 
-function enableDragAndDrop(canvas) {
+function calculateDensity(page) {
+    var canvas = document.getElementById('layout-canvas-' + page);
+    var icons = canvas.querySelectorAll('.layout-icon:not(.layout-icon-asset)'); // Only count unit icons, not assets
+
+    if (icons.length < 2) {
+        return { level: 'medium', percentage: 50 };
+    }
+
+    // Get positions of all unit icons
+    var positions = [];
+    icons.forEach(function(icon) {
+        var rect = icon.getBoundingClientRect();
+        var canvasRect = canvas.getBoundingClientRect();
+        positions.push({
+            x: rect.left - canvasRect.left + rect.width / 2,  // center x
+            y: rect.top - canvasRect.top + rect.height / 2     // center y
+        });
+    });
+
+    // Calculate average distance between all pairs of units
+    var totalDistance = 0;
+    var pairCount = 0;
+
+    for (var i = 0; i < positions.length; i++) {
+        for (var j = i + 1; j < positions.length; j++) {
+            var dx = positions[i].x - positions[j].x;
+            var dy = positions[i].y - positions[j].y;
+            var distance = Math.sqrt(dx * dx + dy * dy);
+            totalDistance += distance;
+            pairCount++;
+        }
+    }
+
+    var avgDistance = totalDistance / pairCount;
+    var canvasRect = canvas.getBoundingClientRect();
+    var canvasSize = Math.sqrt(canvasRect.width * canvasRect.height);
+
+    // Normalize the average distance as a percentage of canvas diagonal
+    var normalizedDistance = avgDistance / canvasSize;
+
+    // Convert to density percentage (inverse of distance)
+    // Lower distance = higher density
+    // Map normalized distance (0 to 1) to density percentage (100 to 0)
+    var densityPercentage = Math.round((1 - normalizedDistance) * 100);
+
+    // Clamp between 0 and 100
+    densityPercentage = Math.max(0, Math.min(100, densityPercentage));
+
+    // Determine density level based on percentage
+    var level;
+    if (densityPercentage >= 85) {
+        level = 'very-high';
+    } else if (densityPercentage >= 70) {
+        level = 'high';
+    } else if (densityPercentage >= 50) {
+        level = 'medium';
+    } else if (densityPercentage >= 30) {
+        level = 'low';
+    } else {
+        level = 'very-low';
+    }
+
+    return { level: level, percentage: densityPercentage };
+}
+
+function updateDensityDisplay(page) {
+    var densityInfo = calculateDensity(page);
+    var percentageElement = document.getElementById('density-percentage-' + page);
+    var barElement = document.getElementById('density-bar-' + page);
+
+    if (percentageElement && barElement) {
+        // Update percentage text
+        percentageElement.textContent = densityInfo.percentage + '%';
+
+        // Update bar width
+        barElement.style.width = densityInfo.percentage + '%';
+
+        // Remove all density classes
+        barElement.classList.remove('very-low', 'low', 'medium', 'high', 'very-high');
+
+        // Add the current density class for color
+        barElement.classList.add(densityInfo.level);
+    }
+}
+
+function enableDragAndDrop(viewport) {
     var draggedElement = null;
     var offsetX = 0;
     var offsetY = 0;
 
-    canvas.addEventListener('dragstart', function(e) {
-        if (e.target.classList.contains('layout-icon')) {
+    // Extract page name from viewport id (e.g., 'layout-viewport-low' -> 'low')
+    var page = viewport.id.replace('layout-viewport-', '');
+
+    // Attach dragstart to document to catch events from icons
+    document.addEventListener('dragstart', function(e) {
+        if (e.target.classList.contains('layout-icon') && e.target.parentElement === viewport) {
             draggedElement = e.target;
             draggedElement.classList.add('dragging');
 
-            // Calculate offset from cursor to element position
-            var rect = draggedElement.getBoundingClientRect();
-            var canvasRect = canvas.getBoundingClientRect();
-            offsetX = e.clientX - rect.left;
-            offsetY = e.clientY - rect.top;
+            var scale = zoomLevel[page];
+
+            // Calculate offset within the icon, accounting for zoom
+            var viewportRect = viewport.getBoundingClientRect();
+
+            // Get the icon's current position in viewport coordinates
+            var iconX = parseFloat(draggedElement.style.left) || 0;
+            var iconY = parseFloat(draggedElement.style.top) || 0;
+
+            // Calculate offset from click position to icon origin
+            offsetX = (e.clientX - viewportRect.left) / scale - iconX;
+            offsetY = (e.clientY - viewportRect.top) / scale - iconY;
         }
     });
 
-    canvas.addEventListener('dragend', function(e) {
-        if (draggedElement) {
+    document.addEventListener('dragend', function(e) {
+        if (draggedElement && e.target === draggedElement) {
             draggedElement.classList.remove('dragging');
             draggedElement = null;
+
+            // Update density after dragging stops
+            updateDensityDisplay(page);
         }
     });
 
-    canvas.addEventListener('dragover', function(e) {
+    viewport.addEventListener('dragover', function(e) {
         e.preventDefault();
     });
 
-    canvas.addEventListener('drop', function(e) {
+    viewport.addEventListener('drop', function(e) {
         e.preventDefault();
         if (draggedElement) {
-            var canvasRect = canvas.getBoundingClientRect();
-            var x = e.clientX - canvasRect.left - offsetX;
-            var y = e.clientY - canvasRect.top - offsetY;
+            var viewportRect = viewport.getBoundingClientRect();
+            var scale = zoomLevel[page];
 
-            // Constrain to canvas bounds
-            x = Math.max(0, Math.min(x, canvasRect.width - draggedElement.offsetWidth));
-            y = Math.max(0, Math.min(y, canvasRect.height - draggedElement.offsetHeight));
+            // Calculate position accounting for zoom
+            var x = (e.clientX - viewportRect.left) / scale - offsetX;
+            var y = (e.clientY - viewportRect.top) / scale - offsetY;
+
+            // Constrain to viewport bounds
+            var maxX = viewport.offsetWidth - draggedElement.offsetWidth;
+            var maxY = viewport.offsetHeight - draggedElement.offsetHeight;
+            x = Math.max(0, Math.min(x, maxX));
+            y = Math.max(0, Math.min(y, maxY));
 
             draggedElement.style.left = x + 'px';
             draggedElement.style.top = y + 'px';
@@ -811,3 +1053,437 @@ function finishLayout(page) {
     alert('Layout saved! This would proceed to the next section.');
     // TODO: Save layout positions and continue to summary
 }
+
+// Layout toolbar functions
+var trashMode = { low: false, medium: false, high: false };
+var selectMode = { low: false, medium: false, high: false };
+var selectedIcons = { low: [], medium: [], high: [] };
+var iconTransforms = {}; // Store rotation and flip state for each icon
+var gridEnabled = { low: true, medium: true, high: true }; // Grid is on by default
+var zoomLevel = { low: 1, medium: 1, high: 1 }; // Zoom level (start at 100%, 1:1 scale)
+
+function resetLayout(page) {
+    var canvas = document.getElementById('layout-canvas-' + page);
+    var icons = canvas.querySelectorAll('.layout-icon');
+
+    // Move all icons to top-left corner in a small cluster
+    icons.forEach(function(icon, index) {
+        var col = index % 5;
+        var row = Math.floor(index / 5);
+        icon.style.left = (col * 90 + 20) + 'px';
+        icon.style.top = (row * 90 + 20) + 'px';
+    });
+
+    // Update density after reset
+    updateDensityDisplay(page);
+}
+
+function distributeGrid(page) {
+    // Default to medium density
+    distributeGridWithDensity(page, 'medium');
+}
+
+function distributeGridWithDensity(page, densityLevel) {
+    var canvas = document.getElementById('layout-canvas-' + page);
+    var icons = canvas.querySelectorAll('.layout-icon');
+    var canvasRect = canvas.getBoundingClientRect();
+
+    var totalIcons = icons.length;
+    var iconWidth = 80;
+    var iconHeight = 80;
+
+    var gridConfig;
+
+    if (densityLevel === 'high') {
+        // High Density: Tight clusters, use only ~30% of canvas space
+        var useableWidth = canvasRect.width * 0.3;
+        var useableHeight = canvasRect.height * 0.3;
+        var paddingX = (canvasRect.width - useableWidth) / 2;
+        var paddingY = (canvasRect.height - useableHeight) / 2;
+
+        // Tighter grid spacing
+        var cols = Math.ceil(Math.sqrt(totalIcons * 1.2)); // More columns for tighter packing
+        var rows = Math.ceil(totalIcons / cols);
+
+        var spacingX = useableWidth / cols;
+        var spacingY = useableHeight / rows;
+
+        gridConfig = {
+            paddingX: paddingX,
+            paddingY: paddingY,
+            spacingX: spacingX,
+            spacingY: spacingY,
+            cols: cols
+        };
+
+    } else if (densityLevel === 'medium') {
+        // Medium Density: Balanced distribution, use ~60% of canvas
+        var useableWidth = canvasRect.width * 0.6;
+        var useableHeight = canvasRect.height * 0.6;
+        var paddingX = (canvasRect.width - useableWidth) / 2;
+        var paddingY = (canvasRect.height - useableHeight) / 2;
+
+        var cols = Math.ceil(Math.sqrt(totalIcons));
+        var rows = Math.ceil(totalIcons / cols);
+
+        var spacingX = useableWidth / cols;
+        var spacingY = useableHeight / rows;
+
+        gridConfig = {
+            paddingX: paddingX,
+            paddingY: paddingY,
+            spacingX: spacingX,
+            spacingY: spacingY,
+            cols: cols
+        };
+
+    } else { // 'low' density
+        // Low Density: Maximum spread, use ~95% of canvas
+        var paddingX = 40;
+        var paddingY = 40;
+        var availableWidth = canvasRect.width - (2 * paddingX);
+        var availableHeight = canvasRect.height - (2 * paddingY);
+
+        // More spread out grid
+        var cols = Math.ceil(Math.sqrt(totalIcons * 0.8)); // Fewer columns for more spread
+        var rows = Math.ceil(totalIcons / cols);
+
+        var spacingX = availableWidth / cols;
+        var spacingY = availableHeight / rows;
+
+        gridConfig = {
+            paddingX: paddingX,
+            paddingY: paddingY,
+            spacingX: spacingX,
+            spacingY: spacingY,
+            cols: cols
+        };
+    }
+
+    // Distribute icons in grid based on density configuration
+    icons.forEach(function(icon, index) {
+        var col = index % gridConfig.cols;
+        var row = Math.floor(index / gridConfig.cols);
+
+        var x = gridConfig.paddingX + (col * gridConfig.spacingX) + (gridConfig.spacingX - iconWidth) / 2;
+        var y = gridConfig.paddingY + (row * gridConfig.spacingY) + (gridConfig.spacingY - iconHeight) / 2;
+
+        icon.style.left = x + 'px';
+        icon.style.top = y + 'px';
+    });
+
+    // Update density after distribution
+    updateDensityDisplay(page);
+}
+
+function toggleTrashMode(page) {
+    trashMode[page] = !trashMode[page];
+    var trashBtn = document.getElementById('trash-btn-' + page);
+    var canvas = document.getElementById('layout-canvas-' + page);
+    var icons = canvas.querySelectorAll('.layout-icon');
+
+    if (trashMode[page]) {
+        trashBtn.classList.add('active');
+        icons.forEach(function(icon) {
+            icon.classList.add('delete-mode');
+            icon.style.cursor = 'pointer';
+        });
+    } else {
+        trashBtn.classList.remove('active');
+        icons.forEach(function(icon) {
+            icon.classList.remove('delete-mode');
+            icon.style.cursor = 'move';
+        });
+    }
+}
+
+function deleteIcon(page, iconElement) {
+    if (!trashMode[page]) return;
+
+    // Extract unit/asset type from icon id
+    var iconId = iconElement.id;
+    var parts = iconId.split('-');
+
+    if (parts[2] === 'asset') {
+        // Asset icon: icon-{page}-asset-{assetType}
+        var assetType = parts[3];
+
+        // Remove from selectedAssets
+        delete selectedAssets[page][assetType];
+
+        // Update budget display
+        updateAssetBudgetAfterDelete(page);
+    } else {
+        // Unit icon: icon-{page}-{unitType}-{index}
+        var unitType = parts[2];
+
+        // Decrease quantity
+        if (quantities[page][unitType] > 0) {
+            quantities[page][unitType]--;
+
+            if (quantities[page][unitType] === 0) {
+                delete quantities[page][unitType];
+            }
+
+            // Update the input field back in Section 2
+            var inputId = 'qty-' + page + '-' + unitType;
+            var input = document.getElementById(inputId);
+            if (input) {
+                input.value = quantities[page][unitType] || 0;
+            }
+        }
+    }
+
+    // Remove the icon from canvas
+    iconElement.remove();
+
+    // Update density
+    updateDensityDisplay(page);
+}
+
+function updateAssetBudgetAfterDelete(page) {
+    // Calculate total asset cost
+    var totalAssetCost = 0;
+    for (var assetType in selectedAssets[page]) {
+        if (selectedAssets[page][assetType]) {
+            totalAssetCost += assetPrices[assetType];
+        }
+    }
+
+    // Get base budget with ownership modifier
+    var baseBudget = budgets[page];
+    var ownershipType = ownershipSelections[page][0];
+    var modifier = ownershipType ? ownershipBudgetModifiers[ownershipType] : 1.0;
+    var adjustedBudget = baseBudget * modifier;
+
+    // Calculate unit costs
+    var totalUnitCost = 0;
+    for (var unitType in quantities[page]) {
+        var quantity = quantities[page][unitType];
+        var price = unitPrices[unitType];
+        totalUnitCost += quantity * price;
+    }
+
+    var remaining = adjustedBudget - totalUnitCost - totalAssetCost;
+
+    // Update remaining budget on Section 4 if we go back
+    var budgetElement = document.getElementById('budget-s4-' + page);
+    if (budgetElement) {
+        budgetElement.textContent = '$' + remaining.toLocaleString();
+    }
+}
+
+function goBackToAssets(page) {
+    // Navigate back to Section 4 (Assets)
+    document.getElementById('layout' + page.charAt(0).toUpperCase() + page.slice(1)).classList.add('hidden');
+    document.getElementById('section4' + page.charAt(0).toUpperCase() + page.slice(1)).classList.remove('hidden');
+    currentPage = page + '-section4';
+    window.scrollTo({ top: 0, behavior: 'auto' });
+    updateBreadcrumb();
+}
+
+// Selection and Transform functions
+function toggleSelectMode(page) {
+    selectMode[page] = !selectMode[page];
+    var selectBtn = document.getElementById('select-btn-' + page);
+    var transformControls = document.getElementById('transform-controls-' + page);
+
+    if (selectMode[page]) {
+        selectBtn.classList.add('active');
+        transformControls.classList.add('active');
+
+        // Disable trash mode if active
+        if (trashMode[page]) {
+            toggleTrashMode(page);
+        }
+    } else {
+        selectBtn.classList.remove('active');
+        transformControls.classList.remove('active');
+        clearSelection(page);
+    }
+}
+
+function toggleIconSelection(page, iconElement) {
+    if (!selectMode[page]) return;
+
+    var iconId = iconElement.id;
+    var index = selectedIcons[page].indexOf(iconId);
+
+    if (index > -1) {
+        // Deselect
+        selectedIcons[page].splice(index, 1);
+        iconElement.classList.remove('selected');
+    } else {
+        // Select
+        selectedIcons[page].push(iconId);
+        iconElement.classList.add('selected');
+    }
+}
+
+function clearSelection(page) {
+    selectedIcons[page].forEach(function(iconId) {
+        var icon = document.getElementById(iconId);
+        if (icon) {
+            icon.classList.remove('selected');
+        }
+    });
+    selectedIcons[page] = [];
+}
+
+function getIconTransform(iconId) {
+    if (!iconTransforms[iconId]) {
+        iconTransforms[iconId] = {
+            rotation: 0,
+            flipH: false,
+            flipV: false
+        };
+    }
+    return iconTransforms[iconId];
+}
+
+function applyTransform(icon) {
+    var transform = getIconTransform(icon.id);
+    var scaleX = transform.flipH ? -1 : 1;
+    var scaleY = transform.flipV ? -1 : 1;
+
+    icon.style.transform = 'rotate(' + transform.rotation + 'deg) scaleX(' + scaleX + ') scaleY(' + scaleY + ')';
+}
+
+function rotateSelected(page, degrees) {
+    if (selectedIcons[page].length === 0) {
+        alert('Please select icons first by clicking on them in Select Mode');
+        return;
+    }
+
+    selectedIcons[page].forEach(function(iconId) {
+        var icon = document.getElementById(iconId);
+        if (icon) {
+            var transform = getIconTransform(iconId);
+            transform.rotation = (transform.rotation + degrees) % 360;
+            applyTransform(icon);
+        }
+    });
+}
+
+function flipSelected(page, direction) {
+    if (selectedIcons[page].length === 0) {
+        alert('Please select icons first by clicking on them in Select Mode');
+        return;
+    }
+
+    selectedIcons[page].forEach(function(iconId) {
+        var icon = document.getElementById(iconId);
+        if (icon) {
+            var transform = getIconTransform(iconId);
+            if (direction === 'horizontal') {
+                transform.flipH = !transform.flipH;
+            } else {
+                transform.flipV = !transform.flipV;
+            }
+            applyTransform(icon);
+        }
+    });
+}
+
+function toggleGrid(page) {
+    gridEnabled[page] = !gridEnabled[page];
+    var canvas = document.getElementById('layout-canvas-' + page);
+    var gridBtn = document.getElementById('grid-btn-' + page);
+
+    if (gridEnabled[page]) {
+        canvas.classList.remove('grid-off');
+        gridBtn.classList.remove('active');
+    } else {
+        canvas.classList.add('grid-off');
+        gridBtn.classList.add('active');
+    }
+}
+
+// Zoom functions
+function setupZoom(page) {
+    var canvas = document.getElementById('layout-canvas-' + page);
+
+    canvas.addEventListener('wheel', function(e) {
+        e.preventDefault();
+
+        if (e.deltaY < 0) {
+            // Scroll up - zoom in
+            zoomIn(page);
+        } else {
+            // Scroll down - zoom out
+            zoomOut(page);
+        }
+    });
+}
+
+function applyZoom(page) {
+    var viewport = document.getElementById('layout-viewport-' + page);
+    var zoomLevelDisplay = document.getElementById('zoom-level-' + page);
+
+    viewport.style.transform = 'scale(' + zoomLevel[page] + ')';
+    zoomLevelDisplay.textContent = Math.round(zoomLevel[page] * 100) + '%';
+}
+
+function zoomIn(page) {
+    if (zoomLevel[page] < 3) { // Max 300%
+        zoomLevel[page] += 0.1;
+        applyZoom(page);
+    }
+}
+
+function zoomOut(page) {
+    if (zoomLevel[page] > 0.2) { // Min 20%
+        zoomLevel[page] -= 0.1;
+        applyZoom(page);
+    }
+}
+
+function resetZoom(page) {
+    zoomLevel[page] = 1;
+    applyZoom(page);
+}
+
+// Image modal functions
+function openImageModal(imageSrc) {
+    var modal = document.getElementById('imageModal');
+    var modalImage = document.getElementById('modalImage');
+
+    modalImage.src = imageSrc;
+    modal.classList.add('active');
+
+    // Prevent body scroll when modal is open
+    document.body.style.overflow = 'hidden';
+}
+
+function closeImageModal() {
+    var modal = document.getElementById('imageModal');
+    modal.classList.remove('active');
+
+    // Restore body scroll
+    document.body.style.overflow = 'auto';
+}
+
+// Add click listeners to all unit and asset images when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    // Use event delegation for dynamically added images
+    document.body.addEventListener('click', function(e) {
+        // Check if clicked element is inside a unit-compact-image or asset-compact-image
+        var imageContainer = e.target.closest('.unit-compact-image, .asset-compact-image');
+
+        if (imageContainer) {
+            // Find the img element inside
+            var img = imageContainer.querySelector('img');
+            if (img && img.src) {
+                openImageModal(img.src);
+                e.stopPropagation(); // Prevent other click handlers
+            }
+        }
+    });
+
+    // Close modal on ESC key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeImageModal();
+        }
+    });
+});

@@ -723,37 +723,100 @@
         <div class="section">
             <div>
                 <h2>Section 4. Community Assets</h2>
-                <p>Select the community assets for your project</p>
-                <div style="display: flex; flex-direction: column; align-items: center;">
-                    <div class="checkbox-row">
-                        <div class="simple-checkbox" onclick="toggleAsset('medium', 'meeting-room', this)"></div>
-                        <span>Meeting Room</span>
+                <p>Select community amenities to enhance your affordable housing project</p>
+                <div class="split-layout" style="margin-top: 2rem;">
+                    <div class="budget-side">
+                        <div class="budget-tracker">
+                            <div class="budget-row">
+                                <span class="budget-label">Project Budget:</span>
+                                <span class="budget-amount">$50,000,000</span>
+                            </div>
+                            <div class="budget-row">
+                                <span class="budget-label">Remaining:</span>
+                                <span class="budget-remaining" id="budget-s4-medium">$50,000,000</span>
+                            </div>
+                            <div class="budget-row">
+                                <span class="budget-label">Total Units:</span>
+                                <span class="budget-units" id="units-s4-medium">0</span>
+                            </div>
+                            <div class="unit-mix-section">
+                                <div class="unit-mix-label">Unit Mix:</div>
+                                <div class="unit-mix-breakdown" id="unit-mix-s4-medium">
+                                    <div class="unit-mix-empty">No units selected</div>
+                                </div>
+                            </div>
+                            <div class="ownership-section">
+                                <div class="ownership-label">Ownership Model:</div>
+                                <div class="ownership-choice" id="ownership-s4-medium">
+                                    <div class="ownership-empty">No model selected</div>
+                                </div>
+                            </div>
+                            <div class="asset-section">
+                                <div class="asset-label">Community Assets:</div>
+                                <div class="asset-breakdown" id="asset-mix-s4-medium">
+                                    <div class="asset-empty">No assets selected</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="checkbox-row">
-                        <div class="simple-checkbox" onclick="toggleAsset('medium', 'primary-school', this)"></div>
-                        <span>Primary School</span>
+                    <div class="units-side">
+                        <div class="unit-grid" style="grid-template-columns: 1fr 1fr 1fr; max-width: 1100px;">
+                            <div class="unit-compact-card" onclick="toggleAssetCard('medium', 'event-space', this)">
+                                <div class="simple-checkbox"></div>
+                                <h3>Event Space</h3>
+                                <div class="asset-compact-image">
+                                    <img src="../IMAGES/eventCenter.pdf" alt="Event Space">
+                                </div>
+                                <p class="unit-compact-price">$1,500,000</p>
+                            </div>
+
+                            <div class="unit-compact-card" onclick="toggleAssetCard('medium', 'primary-school', this)">
+                                <div class="simple-checkbox"></div>
+                                <h3>Primary School</h3>
+                                <div class="asset-compact-image">
+                                    <img src="../IMAGES/primarySchool.pdf" alt="Primary School">
+                                </div>
+                                <p class="unit-compact-price">$6,000,000</p>
+                            </div>
+
+                            <div class="unit-compact-card" onclick="toggleAssetCard('medium', 'secondary-education', this)">
+                                <div class="simple-checkbox"></div>
+                                <h3>Secondary Education</h3>
+                                <div class="asset-compact-image">
+                                    <img src="../IMAGES/specialEducation.pdf" alt="Secondary Education">
+                                </div>
+                                <p class="unit-compact-price">$7,500,000</p>
+                            </div>
+
+                            <div class="unit-compact-card" onclick="toggleAssetCard('medium', 'daycare', this)">
+                                <div class="simple-checkbox"></div>
+                                <h3>Daycare</h3>
+                                <div class="asset-compact-image">
+                                    <img src="../IMAGES/childhoodCare.pdf" alt="Daycare">
+                                </div>
+                                <p class="unit-compact-price">$2,250,000</p>
+                            </div>
+
+                            <div class="unit-compact-card" onclick="toggleAssetCard('medium', 'convenience-store', this)">
+                                <div class="simple-checkbox"></div>
+                                <h3>Convenience Store</h3>
+                                <div class="asset-compact-image">
+                                    <img src="../IMAGES/groceryStore.pdf" alt="Convenience Store">
+                                </div>
+                                <p class="unit-compact-price">$1,200,000</p>
+                            </div>
+
+                            <div class="unit-compact-card" onclick="toggleAssetCard('medium', 'resource-lab', this)">
+                                <div class="simple-checkbox"></div>
+                                <h3>Resource Lab</h3>
+                                <div class="asset-compact-image">
+                                    <img src="../IMAGES/resourceLab.pdf" alt="Resource Lab">
+                                </div>
+                                <p class="unit-compact-price">$1,800,000</p>
+                            </div>
+                        </div>
+                        <button class="next-btn-bottom" onclick="goToAssetDetails('medium')">Next</button>
                     </div>
-                    <div class="checkbox-row">
-                        <div class="simple-checkbox" onclick="toggleAsset('medium', 'secondary-school', this)"></div>
-                        <span>Secondary School</span>
-                    </div>
-                    <div class="checkbox-row">
-                        <div class="simple-checkbox" onclick="toggleAsset('medium', 'daycare', this)"></div>
-                        <span>Daycare</span>
-                    </div>
-                    <div class="checkbox-row">
-                        <div class="simple-checkbox" onclick="toggleAsset('medium', 'event-space', this)"></div>
-                        <span>Event Space</span>
-                    </div>
-                    <div class="checkbox-row">
-                        <div class="simple-checkbox" onclick="toggleAsset('medium', 'gym', this)"></div>
-                        <span>Gym</span>
-                    </div>
-                    <div class="checkbox-row">
-                        <div class="simple-checkbox" onclick="toggleAsset('medium', 'convenience-store', this)"></div>
-                        <span>Convenience Store</span>
-                    </div>
-                    <button class="next-btn" onclick="goToAssetDetails('medium')">Next</button>
                 </div>
             </div>
         </div>
@@ -763,37 +826,110 @@
         <div class="section">
             <div>
                 <h2>Section 4. Community Assets</h2>
-                <p>Select the community assets for your project</p>
-                <div style="display: flex; flex-direction: column; align-items: center;">
-                    <div class="checkbox-row">
-                        <div class="simple-checkbox" onclick="toggleAsset('high', 'meeting-room', this)"></div>
-                        <span>Meeting Room</span>
+                <p>Select community amenities to enhance your affordable housing project</p>
+                <div class="split-layout" style="margin-top: 2rem;">
+                    <div class="budget-side">
+                        <div class="budget-tracker">
+                            <div class="budget-row">
+                                <span class="budget-label">Project Budget:</span>
+                                <span class="budget-amount">$75,000,000</span>
+                            </div>
+                            <div class="budget-row">
+                                <span class="budget-label">Remaining:</span>
+                                <span id="budget-s4-high" class="budget-remaining">$75,000,000</span>
+                            </div>
+                            <div class="budget-row">
+                                <span class="budget-label">Units:</span>
+                                <span id="units-s4-high" class="budget-units">0</span>
+                            </div>
+                        </div>
+
+                        <div class="unit-mix-section">
+                            <h3>Unit Mix</h3>
+                            <div id="unit-mix-s4-high" class="unit-mix-list">
+                                <div class="unit-mix-empty">No units selected</div>
+                            </div>
+                        </div>
+
+                        <div class="ownership-section">
+                            <h3>Ownership Model</h3>
+                            <div id="ownership-s4-high" class="ownership-display">
+                                <div class="ownership-empty">No ownership model selected</div>
+                            </div>
+                        </div>
+
+                        <div class="asset-mix-section">
+                            <h3>Community Assets</h3>
+                            <div id="asset-mix-s4-high" class="asset-mix-list">
+                                <div class="asset-mix-empty">No assets selected</div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="checkbox-row">
-                        <div class="simple-checkbox" onclick="toggleAsset('high', 'primary-school', this)"></div>
-                        <span>Primary School</span>
+
+                    <div class="units-side">
+                        <div class="unit-grid">
+                            <div class="asset-card" onclick="toggleAssetCard('high', 'event-space', this)">
+                                <div class="asset-card-image">
+                                    <img src="../IMAGES/groceryStore.pdf" alt="Event Space">
+                                </div>
+                                <div class="asset-card-content">
+                                    <h3 class="asset-card-title">Event Space</h3>
+                                    <p class="asset-card-cost">Cost: $500,000</p>
+                                </div>
+                            </div>
+
+                            <div class="asset-card" onclick="toggleAssetCard('high', 'primary-school', this)">
+                                <div class="asset-card-image">
+                                    <img src="../IMAGES/groceryStore.pdf" alt="Primary School">
+                                </div>
+                                <div class="asset-card-content">
+                                    <h3 class="asset-card-title">Primary School</h3>
+                                    <p class="asset-card-cost">Cost: $2,000,000</p>
+                                </div>
+                            </div>
+
+                            <div class="asset-card" onclick="toggleAssetCard('high', 'secondary-school', this)">
+                                <div class="asset-card-image">
+                                    <img src="../IMAGES/groceryStore.pdf" alt="Secondary Education">
+                                </div>
+                                <div class="asset-card-content">
+                                    <h3 class="asset-card-title">Secondary Education</h3>
+                                    <p class="asset-card-cost">Cost: $3,000,000</p>
+                                </div>
+                            </div>
+
+                            <div class="asset-card" onclick="toggleAssetCard('high', 'daycare', this)">
+                                <div class="asset-card-image">
+                                    <img src="../IMAGES/groceryStore.pdf" alt="Daycare">
+                                </div>
+                                <div class="asset-card-content">
+                                    <h3 class="asset-card-title">Daycare</h3>
+                                    <p class="asset-card-cost">Cost: $800,000</p>
+                                </div>
+                            </div>
+
+                            <div class="asset-card" onclick="toggleAssetCard('high', 'convenience-store', this)">
+                                <div class="asset-card-image">
+                                    <img src="../IMAGES/groceryStore.pdf" alt="Convenience Store">
+                                </div>
+                                <div class="asset-card-content">
+                                    <h3 class="asset-card-title">Convenience Store</h3>
+                                    <p class="asset-card-cost">Cost: $400,000</p>
+                                </div>
+                            </div>
+
+                            <div class="asset-card" onclick="toggleAssetCard('high', 'resource-lab', this)">
+                                <div class="asset-card-image">
+                                    <img src="../IMAGES/groceryStore.pdf" alt="Resource Lab">
+                                </div>
+                                <div class="asset-card-content">
+                                    <h3 class="asset-card-title">Resource Lab</h3>
+                                    <p class="asset-card-cost">Cost: $1,200,000</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="next-btn" onclick="goToAssetDetails('high')">Next</button>
                     </div>
-                    <div class="checkbox-row">
-                        <div class="simple-checkbox" onclick="toggleAsset('high', 'secondary-school', this)"></div>
-                        <span>Secondary School</span>
-                    </div>
-                    <div class="checkbox-row">
-                        <div class="simple-checkbox" onclick="toggleAsset('high', 'daycare', this)"></div>
-                        <span>Daycare</span>
-                    </div>
-                    <div class="checkbox-row">
-                        <div class="simple-checkbox" onclick="toggleAsset('high', 'event-space', this)"></div>
-                        <span>Event Space</span>
-                    </div>
-                    <div class="checkbox-row">
-                        <div class="simple-checkbox" onclick="toggleAsset('high', 'gym', this)"></div>
-                        <span>Gym</span>
-                    </div>
-                    <div class="checkbox-row">
-                        <div class="simple-checkbox" onclick="toggleAsset('high', 'convenience-store', this)"></div>
-                        <span>Convenience Store</span>
-                    </div>
-                    <button class="next-btn" onclick="goToAssetDetails('high')">Next</button>
                 </div>
             </div>
         </div>
@@ -804,8 +940,82 @@
     <div class="layout-page">
         <h1 class="layout-title">Section 5. Site Layout</h1>
         <p class="layout-subtitle">Drag and drop your units and assets to design your community layout</p>
-        <div class="layout-canvas" id="layout-canvas-low"></div>
-        <button class="next-btn-bottom" onclick="finishLayout('low')" style="position: fixed; bottom: 2rem; right: 2rem;">Finish Layout</button>
+        <div class="layout-toolbar">
+            <div class="tool-btn" onclick="goBackToAssets('low')">
+                <span>←</span>
+                <div class="tooltip">Go Back</div>
+            </div>
+            <div class="tool-btn" onclick="resetLayout('low')">
+                <span>↺</span>
+                <div class="tooltip">Reset Layout</div>
+            </div>
+            <div class="tool-btn-container">
+                <div class="tool-btn">
+                    <span>⊞</span>
+                    <div class="tooltip">Auto Grid</div>
+                </div>
+                <div class="density-presets">
+                    <div class="preset-btn high-density" onclick="distributeGridWithDensity('low', 'high')">
+                        <span class="preset-icon">🔴</span>
+                        <span>High Density</span>
+                    </div>
+                    <div class="preset-btn medium-density" onclick="distributeGridWithDensity('low', 'medium')">
+                        <span class="preset-icon">🟡</span>
+                        <span>Medium Density</span>
+                    </div>
+                    <div class="preset-btn low-density" onclick="distributeGridWithDensity('low', 'low')">
+                        <span class="preset-icon">🟢</span>
+                        <span>Low Density</span>
+                    </div>
+                </div>
+            </div>
+            <div class="tool-btn" id="trash-btn-low" onclick="toggleTrashMode('low')">
+                <span>🗑</span>
+                <div class="tooltip">Delete Mode</div>
+            </div>
+            <div class="tool-btn" id="select-btn-low" onclick="toggleSelectMode('low')">
+                <span>✓</span>
+                <div class="tooltip">Select Mode</div>
+            </div>
+            <div class="tool-btn" id="grid-btn-low" onclick="toggleGrid('low')">
+                <span>#</span>
+                <div class="tooltip">Toggle Grid</div>
+            </div>
+        </div>
+        <div class="transform-controls" id="transform-controls-low">
+            <div class="transform-row">
+                <span class="transform-label">Rotate:</span>
+                <div class="transform-btn" onclick="rotateSelected('low', -90)" title="Rotate Left">↺</div>
+                <div class="transform-btn" onclick="rotateSelected('low', 90)" title="Rotate Right">↻</div>
+            </div>
+            <div class="transform-row">
+                <span class="transform-label">Flip:</span>
+                <div class="transform-btn" onclick="flipSelected('low', 'horizontal')" title="Flip Horizontal">↔</div>
+                <div class="transform-btn" onclick="flipSelected('low', 'vertical')" title="Flip Vertical">↕</div>
+            </div>
+            <div class="transform-row">
+                <div class="transform-btn" onclick="clearSelection('low')" style="width: 100%;" title="Clear Selection">Clear Selection</div>
+            </div>
+        </div>
+        <div class="density-indicator">
+            <div class="density-label">
+                <span>Community Density</span>
+                <span class="density-percentage" id="density-percentage-low">0%</span>
+            </div>
+            <div class="density-bar-container">
+                <div class="density-bar-fill" id="density-bar-low" style="width: 0%;"></div>
+            </div>
+        </div>
+        <div class="layout-canvas" id="layout-canvas-low">
+            <div class="layout-viewport" id="layout-viewport-low"></div>
+        </div>
+        <div class="zoom-controls">
+            <div class="zoom-btn" onclick="zoomIn('low')">+</div>
+            <div class="zoom-level" id="zoom-level-low">100%</div>
+            <div class="zoom-btn" onclick="zoomOut('low')">−</div>
+            <div class="zoom-btn" onclick="resetZoom('low')">⊙</div>
+        </div>
+        <button class="next-btn-bottom" onclick="finishLayout('low')" style="position: fixed; bottom: 2rem; right: 13rem;">Finish Layout</button>
     </div>
 </div>
 
@@ -813,8 +1023,82 @@
     <div class="layout-page">
         <h1 class="layout-title">Section 5. Site Layout</h1>
         <p class="layout-subtitle">Drag and drop your units and assets to design your community layout</p>
-        <div class="layout-canvas" id="layout-canvas-medium"></div>
-        <button class="next-btn-bottom" onclick="finishLayout('medium')" style="position: fixed; bottom: 2rem; right: 2rem;">Finish Layout</button>
+        <div class="layout-toolbar">
+            <div class="tool-btn" onclick="goBackToAssets('medium')">
+                <span>←</span>
+                <div class="tooltip">Go Back</div>
+            </div>
+            <div class="tool-btn" onclick="resetLayout('medium')">
+                <span>↺</span>
+                <div class="tooltip">Reset Layout</div>
+            </div>
+            <div class="tool-btn-container">
+                <div class="tool-btn">
+                    <span>⊞</span>
+                    <div class="tooltip">Auto Grid</div>
+                </div>
+                <div class="density-presets">
+                    <div class="preset-btn high-density" onclick="distributeGridWithDensity('medium', 'high')">
+                        <span class="preset-icon">🔴</span>
+                        <span>High Density</span>
+                    </div>
+                    <div class="preset-btn medium-density" onclick="distributeGridWithDensity('medium', 'medium')">
+                        <span class="preset-icon">🟡</span>
+                        <span>Medium Density</span>
+                    </div>
+                    <div class="preset-btn low-density" onclick="distributeGridWithDensity('medium', 'low')">
+                        <span class="preset-icon">🟢</span>
+                        <span>Low Density</span>
+                    </div>
+                </div>
+            </div>
+            <div class="tool-btn" id="trash-btn-medium" onclick="toggleTrashMode('medium')">
+                <span>🗑</span>
+                <div class="tooltip">Delete Mode</div>
+            </div>
+            <div class="tool-btn" id="select-btn-medium" onclick="toggleSelectMode('medium')">
+                <span>✓</span>
+                <div class="tooltip">Select Mode</div>
+            </div>
+            <div class="tool-btn" id="grid-btn-medium" onclick="toggleGrid('medium')">
+                <span>#</span>
+                <div class="tooltip">Toggle Grid</div>
+            </div>
+        </div>
+        <div class="transform-controls" id="transform-controls-medium">
+            <div class="transform-row">
+                <span class="transform-label">Rotate:</span>
+                <div class="transform-btn" onclick="rotateSelected('medium', -90)" title="Rotate Left">↺</div>
+                <div class="transform-btn" onclick="rotateSelected('medium', 90)" title="Rotate Right">↻</div>
+            </div>
+            <div class="transform-row">
+                <span class="transform-label">Flip:</span>
+                <div class="transform-btn" onclick="flipSelected('medium', 'horizontal')" title="Flip Horizontal">↔</div>
+                <div class="transform-btn" onclick="flipSelected('medium', 'vertical')" title="Flip Vertical">↕</div>
+            </div>
+            <div class="transform-row">
+                <div class="transform-btn" onclick="clearSelection('medium')" style="width: 100%;" title="Clear Selection">Clear Selection</div>
+            </div>
+        </div>
+        <div class="density-indicator">
+            <div class="density-label">
+                <span>Community Density</span>
+                <span class="density-percentage" id="density-percentage-medium">0%</span>
+            </div>
+            <div class="density-bar-container">
+                <div class="density-bar-fill" id="density-bar-medium" style="width: 0%;"></div>
+            </div>
+        </div>
+        <div class="layout-canvas" id="layout-canvas-medium">
+            <div class="layout-viewport" id="layout-viewport-medium"></div>
+        </div>
+        <div class="zoom-controls">
+            <div class="zoom-btn" onclick="zoomIn('medium')">+</div>
+            <div class="zoom-level" id="zoom-level-medium">100%</div>
+            <div class="zoom-btn" onclick="zoomOut('medium')">−</div>
+            <div class="zoom-btn" onclick="resetZoom('medium')">⊙</div>
+        </div>
+        <button class="next-btn-bottom" onclick="finishLayout('medium')" style="position: fixed; bottom: 2rem; right: 13rem;">Finish Layout</button>
     </div>
 </div>
 
@@ -822,8 +1106,82 @@
     <div class="layout-page">
         <h1 class="layout-title">Section 5. Site Layout</h1>
         <p class="layout-subtitle">Drag and drop your units and assets to design your community layout</p>
-        <div class="layout-canvas" id="layout-canvas-high"></div>
-        <button class="next-btn-bottom" onclick="finishLayout('high')" style="position: fixed; bottom: 2rem; right: 2rem;">Finish Layout</button>
+        <div class="layout-toolbar">
+            <div class="tool-btn" onclick="goBackToAssets('high')">
+                <span>←</span>
+                <div class="tooltip">Go Back</div>
+            </div>
+            <div class="tool-btn" onclick="resetLayout('high')">
+                <span>↺</span>
+                <div class="tooltip">Reset Layout</div>
+            </div>
+            <div class="tool-btn-container">
+                <div class="tool-btn">
+                    <span>⊞</span>
+                    <div class="tooltip">Auto Grid</div>
+                </div>
+                <div class="density-presets">
+                    <div class="preset-btn high-density" onclick="distributeGridWithDensity('high', 'high')">
+                        <span class="preset-icon">🔴</span>
+                        <span>High Density</span>
+                    </div>
+                    <div class="preset-btn medium-density" onclick="distributeGridWithDensity('high', 'medium')">
+                        <span class="preset-icon">🟡</span>
+                        <span>Medium Density</span>
+                    </div>
+                    <div class="preset-btn low-density" onclick="distributeGridWithDensity('high', 'low')">
+                        <span class="preset-icon">🟢</span>
+                        <span>Low Density</span>
+                    </div>
+                </div>
+            </div>
+            <div class="tool-btn" id="trash-btn-high" onclick="toggleTrashMode('high')">
+                <span>🗑</span>
+                <div class="tooltip">Delete Mode</div>
+            </div>
+            <div class="tool-btn" id="select-btn-high" onclick="toggleSelectMode('high')">
+                <span>✓</span>
+                <div class="tooltip">Select Mode</div>
+            </div>
+            <div class="tool-btn" id="grid-btn-high" onclick="toggleGrid('high')">
+                <span>#</span>
+                <div class="tooltip">Toggle Grid</div>
+            </div>
+        </div>
+        <div class="transform-controls" id="transform-controls-high">
+            <div class="transform-row">
+                <span class="transform-label">Rotate:</span>
+                <div class="transform-btn" onclick="rotateSelected('high', -90)" title="Rotate Left">↺</div>
+                <div class="transform-btn" onclick="rotateSelected('high', 90)" title="Rotate Right">↻</div>
+            </div>
+            <div class="transform-row">
+                <span class="transform-label">Flip:</span>
+                <div class="transform-btn" onclick="flipSelected('high', 'horizontal')" title="Flip Horizontal">↔</div>
+                <div class="transform-btn" onclick="flipSelected('high', 'vertical')" title="Flip Vertical">↕</div>
+            </div>
+            <div class="transform-row">
+                <div class="transform-btn" onclick="clearSelection('high')" style="width: 100%;" title="Clear Selection">Clear Selection</div>
+            </div>
+        </div>
+        <div class="density-indicator">
+            <div class="density-label">
+                <span>Community Density</span>
+                <span class="density-percentage" id="density-percentage-high">0%</span>
+            </div>
+            <div class="density-bar-container">
+                <div class="density-bar-fill" id="density-bar-high" style="width: 0%;"></div>
+            </div>
+        </div>
+        <div class="layout-canvas" id="layout-canvas-high">
+            <div class="layout-viewport" id="layout-viewport-high"></div>
+        </div>
+        <div class="zoom-controls">
+            <div class="zoom-btn" onclick="zoomIn('high')">+</div>
+            <div class="zoom-level" id="zoom-level-high">100%</div>
+            <div class="zoom-btn" onclick="zoomOut('high')">−</div>
+            <div class="zoom-btn" onclick="resetZoom('high')">⊙</div>
+        </div>
+        <button class="next-btn-bottom" onclick="finishLayout('high')" style="position: fixed; bottom: 2rem; right: 13rem;">Finish Layout</button>
     </div>
 </div>
 
@@ -864,6 +1222,13 @@
         </div>
     </div>
 </div>
+
+<!-- Image Modal -->
+<div id="imageModal" class="image-modal" onclick="closeImageModal()">
+    <span class="image-modal-close" onclick="closeImageModal()">&times;</span>
+    <img id="modalImage" class="image-modal-content" src="" alt="Enlarged view">
+</div>
+
     <script src="../JS/script.js"></script>
 </body>
 </html>
