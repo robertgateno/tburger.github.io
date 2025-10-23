@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Affordable Housing Project</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="breadcrumb" id="breadcrumb"></div>
+
+    <!-- HOME SECTIONS -->
+    <div id="homeContent">
+        <!-- Cover Page 1 -->
+        <div class="cover-page" id="cover1" onclick="advanceCover(2)">
+            <h1 class="cover-title">Affordable Housing Community Planner</h1>
+            <p class="cover-subtitle">Click anywhere to begin</p>
+        </div>
+
+        <!-- Cover Page 2 -->
+        <div class="cover-page hidden" id="cover2" onclick="advanceCover(3)">
+            <h1 class="cover-title-medium">Using Trumansburg, New York<br>As An Affordable Housing Case Study</h1>
+            <p class="cover-subtitle">Click anywhere to continue</p>
+        </div>
+
+        <!-- Section 1 Selection -->
+        <div class="cover-page hidden" id="cover3">
+            <div class="urgency-selection">
+                <h1 class="section-title">Section 1. Project Budget</h1>
+                <p class="section-description">What is your available project budget?</p>
+                <div class="urgency-options">
+                    <button class="urgency-btn low-btn" onclick="goToPage('low')">
+                        <div style="font-size: 2rem; font-weight: 800;">$35M</div>
+                        <div style="font-size: 1.2rem; margin-top: 0.5rem;">Small Scale</div>
+                    </button>
+                    <button class="urgency-btn medium-btn" onclick="goToPage('medium')">
+                        <div style="font-size: 2rem; font-weight: 800;">$50M</div>
+                        <div style="font-size: 1.2rem; margin-top: 0.5rem;">Medium Scale</div>
+                    </button>
+                    <button class="urgency-btn high-btn" onclick="goToPage('high')">
+                        <div style="font-size: 2rem; font-weight: 800;">$75M</div>
+                        <div style="font-size: 1.2rem; margin-top: 0.5rem;">Large Scale</div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LOW PAGE -->
+    <div id="lowContent" class="hidden">
+        <div class="density-page" style="background-image: url('../IMAGES/lowDensity.jpg');">
+            <div class="overlay-content">
+                <h1 class="density-title">Section 2. Housing Types</h1>
+                <div class="split-layout">
+                    <div class="budget-side">
+                        <div class="budget-tracker">
+                            <div class="budget-row">
+                                <span class="budget-label">Project Budget:</span>
+                                <span class="budget-amount">$35,000,000</span>
+                            </div>
+                            <div class="budget-row">
+                                <span class="budget-label">Remaining:</span>
+                                <span class="budget-remaining" id="budget-low">$35,000,000</span>
+                            </div>
+                            <div class="budget-row">
+                                <span class="budget-label">Total Units:</span>
+                                <span class="budget-units" id="units-low">0</span>
+                            </div>
+                            <div class="unit-mix-section">
+                                <div class="unit-mix-label">Unit Mix:</div>
+                                <div class="unit-mix-breakdown" id="unit-mix-low">
+                                    <div class="unit-mix-empty">No units selected</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="units-side">
+                        <div class="unit-grid">
+                            <div class="unit-compact-card">
+                                <h3>Studio</h3>
+                                <div class="unit-compact-image">
+                                    <img src="../IMAGES/studioPlan.pdf" alt="Studio Plan">
+                                </div>
+                                <p class="unit-compact-price">$450,000</p>
+                                <div class="quantity-selector-compact">
+                                    <button class="qty-btn" onclick="changeQuantity('low', 'studio', -1)">-</button>
+                                    <input type="number" id="qty-low-studio" value="0" min="0" readonly>
+                                    <button class="qty-btn" onclick="changeQuantity('low', 'studio', 1)">+</button>
+                                </div>
+                            </div>
+
+                            <div class="unit-compact-card">
+                                <h3>One Bedroom</h3>
+                                <div class="unit-compact-image">
+                                    <img src="../IMAGES/1bedPlan.pdf" alt="One Bedroom Plan">
+                                </div>
+                                <p class="unit-compact-price">$600,000</p>
+                                <div class="quantity-selector-compact">
+                                    <button class="qty-btn" onclick="changeQuantity('low', 'one-bedroom', -1)">-</button>
+                                    <input type="number" id="qty-low-one-bedroom" value="0" min="0" readonly>
+                                    <button class="qty-btn" onclick="changeQuantity('low', 'one-bedroom', 1)">+</button>
+                                </div>
+                            </div>
+
+                            <div class="unit-compact-card">
+                                <h3>Two Bedroom</h3>
+                                <div class="unit-compact-image">
+                                    <img src="../IMAGES/2bedPlan.pdf" alt="Two Bedroom Plan">
+                                </div>
+                                <p class="unit-compact-price">$750,000</p>
+                                <div class="quantity-selector-compact">
+                                    <button class="qty-btn" onclick="changeQuantity('low', 'two-bedroom', -1)">-</button>
+                                    <input type="number" id="qty-low-two-bedroom" value="0" min="0" readonly>
+                                    <button class="qty-btn" onclick="changeQuantity('low', 'two-bedroom', 1)">+</button>
+                                </div>
+                            </div>
+
+                            <div class="unit-compact-card">
+                                <h3>Three Bedroom</h3>
+                                <div class="unit-compact-image">
+                                    <img src="../IMAGES/3bedPlan.pdf" alt="Three Bedroom Plan">
+                                </div>
+                                <p class="unit-compact-price">$900,000</p>
+                                <div class="quantity-selector-compact">
+                                    <button class="qty-btn" onclick="changeQuantity('low', 'three-bedroom', -1)">-</button>
+                                    <input type="number" id="qty-low-three-bedroom" value="0" min="0" readonly>
+                                    <button class="qty-btn" onclick="changeQuantity('low', 'three-bedroom', 1)">+</button>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="next-btn-bottom" onclick="goToSection3('low')">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MEDIUM PAGE -->
+    <div id="mediumContent" class="hidden">
+        <div class="density-page" style="background-image: url('../IMAGES/mediumDensity.jpg');">
+            <div class="overlay-content">
+                <h1 class="density-title">Section 2. Housing Types</h1>
+                <div class="split-layout">
+                    <div class="budget-side">
+                        <div class="budget-tracker">
+                            <div class="budget-row">
+                                <span class="budget-label">Project Budget:</span>
+                                <span class="budget-amount">$50,000,000</span>
+                            </div>
+                            <div class="budget-row">
+                                <span class="budget-label">Remaining:</span>
+                                <span class="budget-remaining" id="budget-medium">$50,000,000</span>
+                            </div>
+                            <div class="budget-row">
+                                <span class="budget-label">Total Units:</span>
+                                <span class="budget-units" id="units-medium">0</span>
+                            </div>
+                            <div class="unit-mix-section">
+                                <div class="unit-mix-label">Unit Mix:</div>
+                                <div class="unit-mix-breakdown" id="unit-mix-medium">
+                                    <div class="unit-mix-empty">No units selected</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="units-side">
+                        <div class="unit-grid">
+                            <div class="unit-compact-card">
+                                <h3>Studio</h3>
+                                <div class="unit-compact-image">
+                                    <img src="../IMAGES/studioPlan.pdf" alt="Studio Plan">
+                                </div>
+                                <p class="unit-compact-price">$450,000</p>
+                                <div class="quantity-selector-compact">
+                                    <button class="qty-btn" onclick="changeQuantity('medium', 'studio', -1)">-</button>
+                                    <input type="number" id="qty-medium-studio" value="0" min="0" readonly>
+                                    <button class="qty-btn" onclick="changeQuantity('medium', 'studio', 1)">+</button>
+                                </div>
+                            </div>
+
+                            <div class="unit-compact-card">
+                                <h3>One Bedroom</h3>
+                                <div class="unit-compact-image">
+                                    <img src="../IMAGES/1bedPlan.pdf" alt="One Bedroom Plan">
+                                </div>
+                                <p class="unit-compact-price">$600,000</p>
+                                <div class="quantity-selector-compact">
+                                    <button class="qty-btn" onclick="changeQuantity('medium', 'one-bedroom', -1)">-</button>
+                                    <input type="number" id="qty-medium-one-bedroom" value="0" min="0" readonly>
+                                    <button class="qty-btn" onclick="changeQuantity('medium', 'one-bedroom', 1)">+</button>
+                                </div>
+                            </div>
+
+                            <div class="unit-compact-card">
+                                <h3>Two Bedroom</h3>
+                                <div class="unit-compact-image">
+                                    <img src="../IMAGES/2bedPlan.pdf" alt="Two Bedroom Plan">
+                                </div>
+                                <p class="unit-compact-price">$750,000</p>
+                                <div class="quantity-selector-compact">
+                                    <button class="qty-btn" onclick="changeQuantity('medium', 'two-bedroom', -1)">-</button>
+                                    <input type="number" id="qty-medium-two-bedroom" value="0" min="0" readonly>
+                                    <button class="qty-btn" onclick="changeQuantity('medium', 'two-bedroom', 1)">+</button>
+                                </div>
+                            </div>
+
+                            <div class="unit-compact-card">
+                                <h3>Three Bedroom</h3>
+                                <div class="unit-compact-image">
+                                    <img src="../IMAGES/3bedPlan.pdf" alt="Three Bedroom Plan">
+                                </div>
+                                <p class="unit-compact-price">$900,000</p>
+                                <div class="quantity-selector-compact">
+                                    <button class="qty-btn" onclick="changeQuantity('medium', 'three-bedroom', -1)">-</button>
+                                    <input type="number" id="qty-medium-three-bedroom" value="0" min="0" readonly>
+                                    <button class="qty-btn" onclick="changeQuantity('medium', 'three-bedroom', 1)">+</button>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="next-btn-bottom" onclick="goToSection3('medium')">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HIGH PAGE -->
+    <div id="highContent" class="hidden">
+        <div class="density-page" style="background-image: url('../IMAGES/highDensity.jpg');">
+            <div class="overlay-content">
+                <h1 class="density-title">Section 2. Housing Types</h1>
+                <div class="split-layout">
+                    <div class="budget-side">
+                        <div class="budget-tracker">
+                            <div class="budget-row">
+                                <span class="budget-label">Project Budget:</span>
+                                <span class="budget-amount">$75,000,000</span>
+                            </div>
+                            <div class="budget-row">
+                                <span class="budget-label">Remaining:</span>
+                                <span class="budget-remaining" id="budget-high">$75,000,000</span>
+                            </div>
+                            <div class="budget-row">
+                                <span class="budget-label">Total Units:</span>
+                                <span class="budget-units" id="units-high">0</span>
+                            </div>
+                            <div class="unit-mix-section">
+                                <div class="unit-mix-label">Unit Mix:</div>
+                                <div class="unit-mix-breakdown" id="unit-mix-high">
+                                    <div class="unit-mix-empty">No units selected</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="units-side">
+                        <div class="unit-grid">
+                            <div class="unit-compact-card">
+                                <h3>Studio</h3>
+                                <div class="unit-compact-image">
+                                    <img src="../IMAGES/studioPlan.pdf" alt="Studio Plan">
+                                </div>
+                                <p class="unit-compact-price">$450,000</p>
+                                <div class="quantity-selector-compact">
+                                    <button class="qty-btn" onclick="changeQuantity('high', 'studio', -1)">-</button>
+                                    <input type="number" id="qty-high-studio" value="0" min="0" readonly>
+                                    <button class="qty-btn" onclick="changeQuantity('high', 'studio', 1)">+</button>
+                                </div>
+                            </div>
+
+                            <div class="unit-compact-card">
+                                <h3>One Bedroom</h3>
+                                <div class="unit-compact-image">
+                                    <img src="../IMAGES/1bedPlan.pdf" alt="One Bedroom Plan">
+                                </div>
+                                <p class="unit-compact-price">$600,000</p>
+                                <div class="quantity-selector-compact">
+                                    <button class="qty-btn" onclick="changeQuantity('high', 'one-bedroom', -1)">-</button>
+                                    <input type="number" id="qty-high-one-bedroom" value="0" min="0" readonly>
+                                    <button class="qty-btn" onclick="changeQuantity('high', 'one-bedroom', 1)">+</button>
+                                </div>
+                            </div>
+
+                            <div class="unit-compact-card">
+                                <h3>Two Bedroom</h3>
+                                <div class="unit-compact-image">
+                                    <img src="../IMAGES/2bedPlan.pdf" alt="Two Bedroom Plan">
+                                </div>
+                                <p class="unit-compact-price">$750,000</p>
+                                <div class="quantity-selector-compact">
+                                    <button class="qty-btn" onclick="changeQuantity('high', 'two-bedroom', -1)">-</button>
+                                    <input type="number" id="qty-high-two-bedroom" value="0" min="0" readonly>
+                                    <button class="qty-btn" onclick="changeQuantity('high', 'two-bedroom', 1)">+</button>
+                                </div>
+                            </div>
+
+                            <div class="unit-compact-card">
+                                <h3>Three Bedroom</h3>
+                                <div class="unit-compact-image">
+                                    <img src="../IMAGES/3bedPlan.pdf" alt="Three Bedroom Plan">
+                                </div>
+                                <p class="unit-compact-price">$900,000</p>
+                                <div class="quantity-selector-compact">
+                                    <button class="qty-btn" onclick="changeQuantity('high', 'three-bedroom', -1)">-</button>
+                                    <input type="number" id="qty-high-three-bedroom" value="0" min="0" readonly>
+                                    <button class="qty-btn" onclick="changeQuantity('high', 'three-bedroom', 1)">+</button>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="next-btn-bottom" onclick="goToSection3('high')">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 3 PAGES -->
+    <div id="section3Low" class="hidden">
+        <div class="section">
+            <div>
+                <h2>Section 3. Ownership Models</h2>
+                <p>Click each card to learn more, then select your preferred model</p>
+                <div class="split-layout" style="margin-top: 2rem;">
+                    <div class="budget-side">
+                        <div class="budget-tracker">
+                            <div class="budget-row">
+                                <span class="budget-label">Project Budget:</span>
+                                <span class="budget-amount">$35,000,000</span>
+                            </div>
+                            <div class="budget-row">
+                                <span class="budget-label">Remaining:</span>
+                                <span class="budget-remaining" id="budget-s3-low">$35,000,000</span>
+                            </div>
+                            <div class="budget-row">
+                                <span class="budget-label">Total Units:</span>
+                                <span class="budget-units" id="units-s3-low">0</span>
+                            </div>
+                            <div class="unit-mix-section">
+                                <div class="unit-mix-label">Unit Mix:</div>
+                                <div class="unit-mix-breakdown" id="unit-mix-s3-low">
+                                    <div class="unit-mix-empty">No units selected</div>
+                                </div>
+                            </div>
+                            <div class="ownership-section">
+                                <div class="ownership-label">Ownership Model:</div>
+                                <div class="ownership-choice" id="ownership-s3-low">
+                                    <div class="ownership-empty">No model selected</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="units-side">
+                        <div class="ownership-cards-container">
+                            <div class="ownership-card" data-type="clt" onclick="toggleOwnershipCard('low', 'clt', this)">
+                                <div class="ownership-header">
+                                    <div class="simple-checkbox"></div>
+                                    <div class="ownership-title">Community Land Trust</div>
+                                    <div class="expand-icon">▼</div>
+                                </div>
+                                <div class="ownership-description">
+                                    <div class="ownership-content">
+                                        A community-based nonprofit organization that owns land and leases it to residents who own the buildings on top.
+                                        <br><br>
+                                        <strong>Financial Impact:</strong> <span style="color: #2563eb;">Standard construction costs</span> - No budget modification, but ensures permanent affordability through resale restrictions and land trust ownership.
+                                        <br><br>
+                                        <strong>Affordability Impact:</strong> Keeps housing permanently affordable by removing land costs from purchase price. Residents build equity while homes remain accessible to future low-income buyers.
+                                        <br><br>
+                                        <strong>Best for:</strong> Long-term community stability and intergenerational affordability.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="ownership-card" data-type="private" onclick="toggleOwnershipCard('low', 'private', this)">
+                                <div class="ownership-header">
+                                    <div class="simple-checkbox"></div>
+                                    <div class="ownership-title">Private Developer</div>
+                                    <div class="expand-icon">▼</div>
+                                </div>
+                                <div class="ownership-description">
+                                    <div class="ownership-content">
+                                        For-profit or mission-driven private companies that develop and manage affordable housing projects.
+                                        <br><br>
+                                        <strong>Financial Impact:</strong> <span style="color: #16a34a;">+15% budget boost</span> - Private developers can leverage tax credits (LIHTC), private capital, and accelerated financing to stretch your budget further.
+                                        <br><br>
+                                        <strong>Affordability Impact:</strong> Can move quickly and access diverse funding sources, but affordability typically time-limited (15-30 years). May require mixed-income approach to be financially viable.
+                                        <br><br>
+                                        <strong>Best for:</strong> Rapid development and projects needing flexible financing options.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="ownership-card" data-type="public" onclick="toggleOwnershipCard('low', 'public', this)">
+                                <div class="ownership-header">
+                                    <div class="simple-checkbox"></div>
+                                    <div class="ownership-title">Public Developer</div>
+                                    <div class="expand-icon">▼</div>
+                                </div>
+                                <div class="ownership-description">
+                                    <div class="ownership-content">
+                                        Government housing authorities or public agencies that develop and operate affordable housing.
+                                        <br><br>
+                                        <strong>Financial Impact:</strong> <span style="color: #dc2626;">-10% budget reduction</span> - Public procurement requirements, prevailing wage mandates, and bureaucratic processes increase costs. However, provides access to federal subsidies and grants.
+                                        <br><br>
+                                        <strong>Affordability Impact:</strong> Serves the lowest income residents with deepest subsidies. Provides permanent affordability with strong tenant protections and supportive services.
+                                        <br><br>
+                                        <strong>Best for:</strong> Serving extremely low-income households and vulnerable populations requiring wraparound services.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="next-btn-bottom" onclick="goToSection5('low')">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <!-- CONTINUE FROM PART 1 -->
+    
+    <div id="section3Medium" class="hidden">
+        <div class="section">
+            <div>
+                <h2>Section 3. Ownership Models</h2>
+                <p>Click each card to learn more, then select your preferred model</p>
+                <div class="split-layout" style="margin-top: 2rem;">
+                    <div class="budget-side">
+                        <div class="budget-tracker">
+                            <div class="budget-row">
+                                <span class="budget-label">Project Budget:</span>
+                                <span class="budget-amount">$50,000,000</span>
+                            </div>
+                            <div class="budget-row">
+                                <span class="budget-label">Remaining:</span>
+                                <span class="budget-remaining" id="budget-s3-medium">$50,000,000</span>
+                            </div>
+                            <div class="budget-row">
+                                <span class="budget-label">Total Units:</span>
+                                <span class="budget-units" id="units-s3-medium">0</span>
+                            </div>
+                            <div class="unit-mix-section">
+                                <div class="unit-mix-label">Unit Mix:</div>
+                                <div class="unit-mix-breakdown" id="unit-mix-s3-medium">
+                                    <div class="unit-mix-empty">No units selected</div>
+                                </div>
+                            </div>
+                            <div class="ownership-section">
+                                <div class="ownership-label">Ownership Model:</div>
+                                <div class="ownership-choice" id="ownership-s3-medium">
+                                    <div class="ownership-empty">No model selected</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="units-side">
+                        <div class="ownership-cards-container">
+                            <div class="ownership-card" data-type="clt" onclick="toggleOwnershipCard('medium', 'clt', this)">
+                                <div class="ownership-header">
+                                    <div class="simple-checkbox"></div>
+                                    <div class="ownership-title">Community Land Trust</div>
+                                    <div class="expand-icon">▼</div>
+                                </div>
+                                <div class="ownership-description">
+                                    <div class="ownership-content">
+                                        A community-based nonprofit organization that owns land and leases it to residents who own the buildings on top.
+                                        <br><br>
+                                        <strong>Financial Impact:</strong> <span style="color: #2563eb;">Standard construction costs</span> - No budget modification, but ensures permanent affordability through resale restrictions and land trust ownership.
+                                        <br><br>
+                                        <strong>Affordability Impact:</strong> Keeps housing permanently affordable by removing land costs from purchase price. Residents build equity while homes remain accessible to future low-income buyers.
+                                        <br><br>
+                                        <strong>Best for:</strong> Long-term community stability and intergenerational affordability.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="ownership-card" data-type="private" onclick="toggleOwnershipCard('medium', 'private', this)">
+                                <div class="ownership-header">
+                                    <div class="simple-checkbox"></div>
+                                    <div class="ownership-title">Private Developer</div>
+                                    <div class="expand-icon">▼</div>
+                                </div>
+                                <div class="ownership-description">
+                                    <div class="ownership-content">
+                                        For-profit or mission-driven private companies that develop and manage affordable housing projects.
+                                        <br><br>
+                                        <strong>Financial Impact:</strong> <span style="color: #16a34a;">+15% budget boost</span> - Private developers can leverage tax credits (LIHTC), private capital, and accelerated financing to stretch your budget further.
+                                        <br><br>
+                                        <strong>Affordability Impact:</strong> Can move quickly and access diverse funding sources, but affordability typically time-limited (15-30 years). May require mixed-income approach to be financially viable.
+                                        <br><br>
+                                        <strong>Best for:</strong> Rapid development and projects needing flexible financing options.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="ownership-card" data-type="public" onclick="toggleOwnershipCard('medium', 'public', this)">
+                                <div class="ownership-header">
+                                    <div class="simple-checkbox"></div>
+                                    <div class="ownership-title">Public Developer</div>
+                                    <div class="expand-icon">▼</div>
+                                </div>
+                                <div class="ownership-description">
+                                    <div class="ownership-content">
+                                        Government housing authorities or public agencies that develop and operate affordable housing.
+                                        <br><br>
+                                        <strong>Financial Impact:</strong> <span style="color: #dc2626;">-10% budget reduction</span> - Public procurement requirements, prevailing wage mandates, and bureaucratic processes increase costs. However, provides access to federal subsidies and grants.
+                                        <br><br>
+                                        <strong>Affordability Impact:</strong> Serves the lowest income residents with deepest subsidies. Provides permanent affordability with strong tenant protections and supportive services.
+                                        <br><br>
+                                        <strong>Best for:</strong> Serving extremely low-income households and vulnerable populations requiring wraparound services.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="next-btn-bottom" onclick="goToSection5('medium')">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="section3High" class="hidden">
+        <div class="section">
+            <div>
+                <h2>Section 3. Ownership Models</h2>
+                <p>Click each card to learn more, then select your preferred model</p>
+                <div class="split-layout" style="margin-top: 2rem;">
+                    <div class="budget-side">
+                        <div class="budget-tracker">
+                            <div class="budget-row">
+                                <span class="budget-label">Project Budget:</span>
+                                <span class="budget-amount">$75,000,000</span>
+                            </div>
+                            <div class="budget-row">
+                                <span class="budget-label">Remaining:</span>
+                                <span class="budget-remaining" id="budget-s3-high">$75,000,000</span>
+                            </div>
+                            <div class="budget-row">
+                                <span class="budget-label">Total Units:</span>
+                                <span class="budget-units" id="units-s3-high">0</span>
+                            </div>
+                            <div class="unit-mix-section">
+                                <div class="unit-mix-label">Unit Mix:</div>
+                                <div class="unit-mix-breakdown" id="unit-mix-s3-high">
+                                    <div class="unit-mix-empty">No units selected</div>
+                                </div>
+                            </div>
+                            <div class="ownership-section">
+                                <div class="ownership-label">Ownership Model:</div>
+                                <div class="ownership-choice" id="ownership-s3-high">
+                                    <div class="ownership-empty">No model selected</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="units-side">
+                        <div class="ownership-cards-container">
+                            <div class="ownership-card" data-type="clt" onclick="toggleOwnershipCard('high', 'clt', this)">
+                                <div class="ownership-header">
+                                    <div class="simple-checkbox"></div>
+                                    <div class="ownership-title">Community Land Trust</div>
+                                    <div class="expand-icon">▼</div>
+                                </div>
+                                <div class="ownership-description">
+                                    <div class="ownership-content">
+                                        A community-based nonprofit organization that owns land and leases it to residents who own the buildings on top.
+                                        <br><br>
+                                        <strong>Financial Impact:</strong> <span style="color: #2563eb;">Standard construction costs</span> - No budget modification, but ensures permanent affordability through resale restrictions and land trust ownership.
+                                        <br><br>
+                                        <strong>Affordability Impact:</strong> Keeps housing permanently affordable by removing land costs from purchase price. Residents build equity while homes remain accessible to future low-income buyers.
+                                        <br><br>
+                                        <strong>Best for:</strong> Long-term community stability and intergenerational affordability.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="ownership-card" data-type="private" onclick="toggleOwnershipCard('high', 'private', this)">
+                                <div class="ownership-header">
+                                    <div class="simple-checkbox"></div>
+                                    <div class="ownership-title">Private Developer</div>
+                                    <div class="expand-icon">▼</div>
+                                </div>
+                                <div class="ownership-description">
+                                    <div class="ownership-content">
+                                        For-profit or mission-driven private companies that develop and manage affordable housing projects.
+                                        <br><br>
+                                        <strong>Financial Impact:</strong> <span style="color: #16a34a;">+15% budget boost</span> - Private developers can leverage tax credits (LIHTC), private capital, and accelerated financing to stretch your budget further.
+                                        <br><br>
+                                        <strong>Affordability Impact:</strong> Can move quickly and access diverse funding sources, but affordability typically time-limited (15-30 years). May require mixed-income approach to be financially viable.
+                                        <br><br>
+                                        <strong>Best for:</strong> Rapid development and projects needing flexible financing options.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="ownership-card" data-type="public" onclick="toggleOwnershipCard('high', 'public', this)">
+                                <div class="ownership-header">
+                                    <div class="simple-checkbox"></div>
+                                    <div class="ownership-title">Public Developer</div>
+                                    <div class="expand-icon">▼</div>
+                                </div>
+                                <div class="ownership-description">
+                                    <div class="ownership-content">
+                                        Government housing authorities or public agencies that develop and operate affordable housing.
+                                        <br><br>
+                                        <strong>Financial Impact:</strong> <span style="color: #dc2626;">-10% budget reduction</span> - Public procurement requirements, prevailing wage mandates, and bureaucratic processes increase costs. However, provides access to federal subsidies and grants.
+                                        <br><br>
+                                        <strong>Affordability Impact:</strong> Serves the lowest income residents with deepest subsidies. Provides permanent affordability with strong tenant protections and supportive services.
+                                        <br><br>
+                                        <strong>Best for:</strong> Serving extremely low-income households and vulnerable populations requiring wraparound services.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="next-btn-bottom" onclick="goToSection5('high')">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 4 PAGES - ASSETS -->
+    <div id="section4Low" class="hidden">
+        <div class="section">
+            <div>
+                <h2>Section 4. Community Assets</h2>
+                <p>Select community amenities to enhance your affordable housing project</p>
+                <div class="split-layout" style="margin-top: 2rem;">
+                    <div class="budget-side">
+                        <div class="budget-tracker">
+                            <div class="budget-row">
+                                <span class="budget-label">Project Budget:</span>
+                                <span class="budget-amount">$35,000,000</span>
+                            </div>
+                            <div class="budget-row">
+                                <span class="budget-label">Remaining:</span>
+                                <span class="budget-remaining" id="budget-s4-low">$35,000,000</span>
+                            </div>
+                            <div class="budget-row">
+                                <span class="budget-label">Total Units:</span>
+                                <span class="budget-units" id="units-s4-low">0</span>
+                            </div>
+                            <div class="unit-mix-section">
+                                <div class="unit-mix-label">Unit Mix:</div>
+                                <div class="unit-mix-breakdown" id="unit-mix-s4-low">
+                                    <div class="unit-mix-empty">No units selected</div>
+                                </div>
+                            </div>
+                            <div class="ownership-section">
+                                <div class="ownership-label">Ownership Model:</div>
+                                <div class="ownership-choice" id="ownership-s4-low">
+                                    <div class="ownership-empty">No model selected</div>
+                                </div>
+                            </div>
+                            <div class="asset-section">
+                                <div class="asset-label">Community Assets:</div>
+                                <div class="asset-breakdown" id="asset-mix-s4-low">
+                                    <div class="asset-empty">No assets selected</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="units-side">
+                        <div class="unit-grid" style="grid-template-columns: 1fr 1fr 1fr; max-width: 1100px;">
+                            <div class="unit-compact-card" onclick="toggleAssetCard('low', 'event-space', this)">
+                                <div class="simple-checkbox"></div>
+                                <h3>Event Space</h3>
+                                <div class="asset-compact-image">
+                                    <img src="../IMAGES/eventCenter.pdf" alt="Event Space">
+                                </div>
+                                <p class="unit-compact-price">$1,500,000</p>
+                            </div>
+
+                            <div class="unit-compact-card" onclick="toggleAssetCard('low', 'primary-school', this)">
+                                <div class="simple-checkbox"></div>
+                                <h3>Primary School</h3>
+                                <div class="asset-compact-image">
+                                    <img src="../IMAGES/primarySchool.pdf" alt="Primary School">
+                                </div>
+                                <p class="unit-compact-price">$6,000,000</p>
+                            </div>
+
+                            <div class="unit-compact-card" onclick="toggleAssetCard('low', 'secondary-education', this)">
+                                <div class="simple-checkbox"></div>
+                                <h3>Secondary Education</h3>
+                                <div class="asset-compact-image">
+                                    <img src="../IMAGES/specialEducation.pdf" alt="Secondary Education">
+                                </div>
+                                <p class="unit-compact-price">$7,500,000</p>
+                            </div>
+
+                            <div class="unit-compact-card" onclick="toggleAssetCard('low', 'daycare', this)">
+                                <div class="simple-checkbox"></div>
+                                <h3>Daycare</h3>
+                                <div class="asset-compact-image">
+                                    <img src="../IMAGES/childhoodCare.pdf" alt="Daycare">
+                                </div>
+                                <p class="unit-compact-price">$2,250,000</p>
+                            </div>
+
+                            <div class="unit-compact-card" onclick="toggleAssetCard('low', 'convenience-store', this)">
+                                <div class="simple-checkbox"></div>
+                                <h3>Convenience Store</h3>
+                                <div class="asset-compact-image">
+                                    <img src="../IMAGES/groceryStore.pdf" alt="Convenience Store">
+                                </div>
+                                <p class="unit-compact-price">$1,200,000</p>
+                            </div>
+
+                            <div class="unit-compact-card" onclick="toggleAssetCard('low', 'resource-lab', this)">
+                                <div class="simple-checkbox"></div>
+                                <h3>Resource Lab</h3>
+                                <div class="asset-compact-image">
+                                    <img src="../IMAGES/resourceLab.pdf" alt="Resource Lab">
+                                </div>
+                                <p class="unit-compact-price">$1,800,000</p>
+                            </div>
+                        </div>
+                        <button class="next-btn-bottom" onclick="goToAssetDetails('low')">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="section4Medium" class="hidden">
+        <div class="section">
+            <div>
+                <h2>Section 4. Community Assets</h2>
+                <p>Select community amenities to enhance your affordable housing project</p>
+                <div class="split-layout" style="margin-top: 2rem;">
+                    <div class="budget-side">
+                        <div class="budget-tracker">
+                            <div class="budget-row">
+                                <span class="budget-label">Project Budget:</span>
+                                <span class="budget-amount">$50,000,000</span>
+                            </div>
+                            <div class="budget-row">
+                                <span class="budget-label">Remaining:</span>
+                                <span class="budget-remaining" id="budget-s4-medium">$50,000,000</span>
+                            </div>
+                            <div class="budget-row">
+                                <span class="budget-label">Total Units:</span>
+                                <span class="budget-units" id="units-s4-medium">0</span>
+                            </div>
+                            <div class="unit-mix-section">
+                                <div class="unit-mix-label">Unit Mix:</div>
+                                <div class="unit-mix-breakdown" id="unit-mix-s4-medium">
+                                    <div class="unit-mix-empty">No units selected</div>
+                                </div>
+                            </div>
+                            <div class="ownership-section">
+                                <div class="ownership-label">Ownership Model:</div>
+                                <div class="ownership-choice" id="ownership-s4-medium">
+                                    <div class="ownership-empty">No model selected</div>
+                                </div>
+                            </div>
+                            <div class="asset-section">
+                                <div class="asset-label">Community Assets:</div>
+                                <div class="asset-breakdown" id="asset-mix-s4-medium">
+                                    <div class="asset-empty">No assets selected</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="units-side">
+                        <div class="unit-grid" style="grid-template-columns: 1fr 1fr 1fr; max-width: 1100px;">
+                            <div class="unit-compact-card" onclick="toggleAssetCard('medium', 'event-space', this)">
+                                <div class="simple-checkbox"></div>
+                                <h3>Event Space</h3>
+                                <div class="asset-compact-image">
+                                    <img src="../IMAGES/eventCenter.pdf" alt="Event Space">
+                                </div>
+                                <p class="unit-compact-price">$1,500,000</p>
+                            </div>
+
+                            <div class="unit-compact-card" onclick="toggleAssetCard('medium', 'primary-school', this)">
+                                <div class="simple-checkbox"></div>
+                                <h3>Primary School</h3>
+                                <div class="asset-compact-image">
+                                    <img src="../IMAGES/primarySchool.pdf" alt="Primary School">
+                                </div>
+                                <p class="unit-compact-price">$6,000,000</p>
+                            </div>
+
+                            <div class="unit-compact-card" onclick="toggleAssetCard('medium', 'secondary-education', this)">
+                                <div class="simple-checkbox"></div>
+                                <h3>Secondary Education</h3>
+                                <div class="asset-compact-image">
+                                    <img src="../IMAGES/specialEducation.pdf" alt="Secondary Education">
+                                </div>
+                                <p class="unit-compact-price">$7,500,000</p>
+                            </div>
+
+                            <div class="unit-compact-card" onclick="toggleAssetCard('medium', 'daycare', this)">
+                                <div class="simple-checkbox"></div>
+                                <h3>Daycare</h3>
+                                <div class="asset-compact-image">
+                                    <img src="../IMAGES/childhoodCare.pdf" alt="Daycare">
+                                </div>
+                                <p class="unit-compact-price">$2,250,000</p>
+                            </div>
+
+                            <div class="unit-compact-card" onclick="toggleAssetCard('medium', 'convenience-store', this)">
+                                <div class="simple-checkbox"></div>
+                                <h3>Convenience Store</h3>
+                                <div class="asset-compact-image">
+                                    <img src="../IMAGES/groceryStore.pdf" alt="Convenience Store">
+                                </div>
+                                <p class="unit-compact-price">$1,200,000</p>
+                            </div>
+
+                            <div class="unit-compact-card" onclick="toggleAssetCard('medium', 'resource-lab', this)">
+                                <div class="simple-checkbox"></div>
+                                <h3>Resource Lab</h3>
+                                <div class="asset-compact-image">
+                                    <img src="../IMAGES/resourceLab.pdf" alt="Resource Lab">
+                                </div>
+                                <p class="unit-compact-price">$1,800,000</p>
+                            </div>
+                        </div>
+                        <button class="next-btn-bottom" onclick="goToAssetDetails('medium')">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="section4High" class="hidden">
+        <div class="section">
+            <div>
+                <h2>Section 4. Community Assets</h2>
+                <p>Select community amenities to enhance your affordable housing project</p>
+                <div class="split-layout" style="margin-top: 2rem;">
+                    <div class="budget-side">
+                        <div class="budget-tracker">
+                            <div class="budget-row">
+                                <span class="budget-label">Project Budget:</span>
+                                <span class="budget-amount">$75,000,000</span>
+                            </div>
+                            <div class="budget-row">
+                                <span class="budget-label">Remaining:</span>
+                                <span id="budget-s4-high" class="budget-remaining">$75,000,000</span>
+                            </div>
+                            <div class="budget-row">
+                                <span class="budget-label">Units:</span>
+                                <span id="units-s4-high" class="budget-units">0</span>
+                            </div>
+                        </div>
+
+                        <div class="unit-mix-section">
+                            <h3>Unit Mix</h3>
+                            <div id="unit-mix-s4-high" class="unit-mix-list">
+                                <div class="unit-mix-empty">No units selected</div>
+                            </div>
+                        </div>
+
+                        <div class="ownership-section">
+                            <h3>Ownership Model</h3>
+                            <div id="ownership-s4-high" class="ownership-display">
+                                <div class="ownership-empty">No ownership model selected</div>
+                            </div>
+                        </div>
+
+                        <div class="asset-mix-section">
+                            <h3>Community Assets</h3>
+                            <div id="asset-mix-s4-high" class="asset-mix-list">
+                                <div class="asset-mix-empty">No assets selected</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="units-side">
+                        <div class="unit-grid">
+                            <div class="asset-card" onclick="toggleAssetCard('high', 'event-space', this)">
+                                <div class="asset-card-image">
+                                    <img src="../IMAGES/groceryStore.pdf" alt="Event Space">
+                                </div>
+                                <div class="asset-card-content">
+                                    <h3 class="asset-card-title">Event Space</h3>
+                                    <p class="asset-card-cost">Cost: $500,000</p>
+                                </div>
+                            </div>
+
+                            <div class="asset-card" onclick="toggleAssetCard('high', 'primary-school', this)">
+                                <div class="asset-card-image">
+                                    <img src="../IMAGES/groceryStore.pdf" alt="Primary School">
+                                </div>
+                                <div class="asset-card-content">
+                                    <h3 class="asset-card-title">Primary School</h3>
+                                    <p class="asset-card-cost">Cost: $2,000,000</p>
+                                </div>
+                            </div>
+
+                            <div class="asset-card" onclick="toggleAssetCard('high', 'secondary-school', this)">
+                                <div class="asset-card-image">
+                                    <img src="../IMAGES/groceryStore.pdf" alt="Secondary Education">
+                                </div>
+                                <div class="asset-card-content">
+                                    <h3 class="asset-card-title">Secondary Education</h3>
+                                    <p class="asset-card-cost">Cost: $3,000,000</p>
+                                </div>
+                            </div>
+
+                            <div class="asset-card" onclick="toggleAssetCard('high', 'daycare', this)">
+                                <div class="asset-card-image">
+                                    <img src="../IMAGES/groceryStore.pdf" alt="Daycare">
+                                </div>
+                                <div class="asset-card-content">
+                                    <h3 class="asset-card-title">Daycare</h3>
+                                    <p class="asset-card-cost">Cost: $800,000</p>
+                                </div>
+                            </div>
+
+                            <div class="asset-card" onclick="toggleAssetCard('high', 'convenience-store', this)">
+                                <div class="asset-card-image">
+                                    <img src="../IMAGES/groceryStore.pdf" alt="Convenience Store">
+                                </div>
+                                <div class="asset-card-content">
+                                    <h3 class="asset-card-title">Convenience Store</h3>
+                                    <p class="asset-card-cost">Cost: $400,000</p>
+                                </div>
+                            </div>
+
+                            <div class="asset-card" onclick="toggleAssetCard('high', 'resource-lab', this)">
+                                <div class="asset-card-image">
+                                    <img src="../IMAGES/groceryStore.pdf" alt="Resource Lab">
+                                </div>
+                                <div class="asset-card-content">
+                                    <h3 class="asset-card-title">Resource Lab</h3>
+                                    <p class="asset-card-cost">Cost: $1,200,000</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="next-btn" onclick="goToAssetDetails('high')">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- LAYOUT PAGES - DRAG AND DROP -->
+<div id="layoutLow" class="hidden">
+    <div class="layout-page">
+        <h1 class="layout-title">Section 5. Site Layout</h1>
+        <p class="layout-subtitle">Drag and drop your units and assets to design your community layout</p>
+        <div class="layout-toolbar">
+            <div class="tool-btn" onclick="goBackToAssets('low')">
+                <span>←</span>
+                <div class="tooltip">Go Back</div>
+            </div>
+            <div class="tool-btn" onclick="resetLayout('low')">
+                <span>↺</span>
+                <div class="tooltip">Reset Layout</div>
+            </div>
+            <div class="tool-btn-container">
+                <div class="tool-btn">
+                    <span>⊞</span>
+                    <div class="tooltip">Auto Grid</div>
+                </div>
+                <div class="density-presets">
+                    <div class="preset-btn high-density" onclick="distributeGridWithDensity('low', 'high')">
+                        <span class="preset-icon">🔴</span>
+                        <span>High Density</span>
+                    </div>
+                    <div class="preset-btn medium-density" onclick="distributeGridWithDensity('low', 'medium')">
+                        <span class="preset-icon">🟡</span>
+                        <span>Medium Density</span>
+                    </div>
+                    <div class="preset-btn low-density" onclick="distributeGridWithDensity('low', 'low')">
+                        <span class="preset-icon">🟢</span>
+                        <span>Low Density</span>
+                    </div>
+                </div>
+            </div>
+            <div class="tool-btn" id="trash-btn-low" onclick="toggleTrashMode('low')">
+                <span>🗑</span>
+                <div class="tooltip">Delete Mode</div>
+            </div>
+            <div class="tool-btn" id="select-btn-low" onclick="toggleSelectMode('low')">
+                <span>✓</span>
+                <div class="tooltip">Select Mode</div>
+            </div>
+            <div class="tool-btn" id="grid-btn-low" onclick="toggleGrid('low')">
+                <span>#</span>
+                <div class="tooltip">Toggle Grid</div>
+            </div>
+        </div>
+        <div class="transform-controls" id="transform-controls-low">
+            <div class="transform-row">
+                <span class="transform-label">Rotate:</span>
+                <div class="transform-btn" onclick="rotateSelected('low', -90)" title="Rotate Left">↺</div>
+                <div class="transform-btn" onclick="rotateSelected('low', 90)" title="Rotate Right">↻</div>
+            </div>
+            <div class="transform-row">
+                <span class="transform-label">Flip:</span>
+                <div class="transform-btn" onclick="flipSelected('low', 'horizontal')" title="Flip Horizontal">↔</div>
+                <div class="transform-btn" onclick="flipSelected('low', 'vertical')" title="Flip Vertical">↕</div>
+            </div>
+            <div class="transform-row">
+                <div class="transform-btn" onclick="clearSelection('low')" style="width: 100%;" title="Clear Selection">Clear Selection</div>
+            </div>
+        </div>
+        <div class="density-indicator">
+            <div class="density-label">
+                <span>Community Density</span>
+                <span class="density-percentage" id="density-percentage-low">0%</span>
+            </div>
+            <div class="density-bar-container">
+                <div class="density-bar-fill" id="density-bar-low" style="width: 0%;"></div>
+            </div>
+        </div>
+        <div class="layout-canvas" id="layout-canvas-low">
+            <div class="layout-viewport" id="layout-viewport-low"></div>
+        </div>
+        <div class="zoom-controls">
+            <div class="zoom-btn" onclick="zoomIn('low')">+</div>
+            <div class="zoom-level" id="zoom-level-low">100%</div>
+            <div class="zoom-btn" onclick="zoomOut('low')">−</div>
+            <div class="zoom-btn" onclick="resetZoom('low')">⊙</div>
+        </div>
+        <button class="next-btn-bottom" onclick="finishLayout('low')" style="position: fixed; bottom: 2rem; right: 13rem;">Finish Layout</button>
+    </div>
+</div>
+
+<div id="layoutMedium" class="hidden">
+    <div class="layout-page">
+        <h1 class="layout-title">Section 5. Site Layout</h1>
+        <p class="layout-subtitle">Drag and drop your units and assets to design your community layout</p>
+        <div class="layout-toolbar">
+            <div class="tool-btn" onclick="goBackToAssets('medium')">
+                <span>←</span>
+                <div class="tooltip">Go Back</div>
+            </div>
+            <div class="tool-btn" onclick="resetLayout('medium')">
+                <span>↺</span>
+                <div class="tooltip">Reset Layout</div>
+            </div>
+            <div class="tool-btn-container">
+                <div class="tool-btn">
+                    <span>⊞</span>
+                    <div class="tooltip">Auto Grid</div>
+                </div>
+                <div class="density-presets">
+                    <div class="preset-btn high-density" onclick="distributeGridWithDensity('medium', 'high')">
+                        <span class="preset-icon">🔴</span>
+                        <span>High Density</span>
+                    </div>
+                    <div class="preset-btn medium-density" onclick="distributeGridWithDensity('medium', 'medium')">
+                        <span class="preset-icon">🟡</span>
+                        <span>Medium Density</span>
+                    </div>
+                    <div class="preset-btn low-density" onclick="distributeGridWithDensity('medium', 'low')">
+                        <span class="preset-icon">🟢</span>
+                        <span>Low Density</span>
+                    </div>
+                </div>
+            </div>
+            <div class="tool-btn" id="trash-btn-medium" onclick="toggleTrashMode('medium')">
+                <span>🗑</span>
+                <div class="tooltip">Delete Mode</div>
+            </div>
+            <div class="tool-btn" id="select-btn-medium" onclick="toggleSelectMode('medium')">
+                <span>✓</span>
+                <div class="tooltip">Select Mode</div>
+            </div>
+            <div class="tool-btn" id="grid-btn-medium" onclick="toggleGrid('medium')">
+                <span>#</span>
+                <div class="tooltip">Toggle Grid</div>
+            </div>
+        </div>
+        <div class="transform-controls" id="transform-controls-medium">
+            <div class="transform-row">
+                <span class="transform-label">Rotate:</span>
+                <div class="transform-btn" onclick="rotateSelected('medium', -90)" title="Rotate Left">↺</div>
+                <div class="transform-btn" onclick="rotateSelected('medium', 90)" title="Rotate Right">↻</div>
+            </div>
+            <div class="transform-row">
+                <span class="transform-label">Flip:</span>
+                <div class="transform-btn" onclick="flipSelected('medium', 'horizontal')" title="Flip Horizontal">↔</div>
+                <div class="transform-btn" onclick="flipSelected('medium', 'vertical')" title="Flip Vertical">↕</div>
+            </div>
+            <div class="transform-row">
+                <div class="transform-btn" onclick="clearSelection('medium')" style="width: 100%;" title="Clear Selection">Clear Selection</div>
+            </div>
+        </div>
+        <div class="density-indicator">
+            <div class="density-label">
+                <span>Community Density</span>
+                <span class="density-percentage" id="density-percentage-medium">0%</span>
+            </div>
+            <div class="density-bar-container">
+                <div class="density-bar-fill" id="density-bar-medium" style="width: 0%;"></div>
+            </div>
+        </div>
+        <div class="layout-canvas" id="layout-canvas-medium">
+            <div class="layout-viewport" id="layout-viewport-medium"></div>
+        </div>
+        <div class="zoom-controls">
+            <div class="zoom-btn" onclick="zoomIn('medium')">+</div>
+            <div class="zoom-level" id="zoom-level-medium">100%</div>
+            <div class="zoom-btn" onclick="zoomOut('medium')">−</div>
+            <div class="zoom-btn" onclick="resetZoom('medium')">⊙</div>
+        </div>
+        <button class="next-btn-bottom" onclick="finishLayout('medium')" style="position: fixed; bottom: 2rem; right: 13rem;">Finish Layout</button>
+    </div>
+</div>
+
+<div id="layoutHigh" class="hidden">
+    <div class="layout-page">
+        <h1 class="layout-title">Section 5. Site Layout</h1>
+        <p class="layout-subtitle">Drag and drop your units and assets to design your community layout</p>
+        <div class="layout-toolbar">
+            <div class="tool-btn" onclick="goBackToAssets('high')">
+                <span>←</span>
+                <div class="tooltip">Go Back</div>
+            </div>
+            <div class="tool-btn" onclick="resetLayout('high')">
+                <span>↺</span>
+                <div class="tooltip">Reset Layout</div>
+            </div>
+            <div class="tool-btn-container">
+                <div class="tool-btn">
+                    <span>⊞</span>
+                    <div class="tooltip">Auto Grid</div>
+                </div>
+                <div class="density-presets">
+                    <div class="preset-btn high-density" onclick="distributeGridWithDensity('high', 'high')">
+                        <span class="preset-icon">🔴</span>
+                        <span>High Density</span>
+                    </div>
+                    <div class="preset-btn medium-density" onclick="distributeGridWithDensity('high', 'medium')">
+                        <span class="preset-icon">🟡</span>
+                        <span>Medium Density</span>
+                    </div>
+                    <div class="preset-btn low-density" onclick="distributeGridWithDensity('high', 'low')">
+                        <span class="preset-icon">🟢</span>
+                        <span>Low Density</span>
+                    </div>
+                </div>
+            </div>
+            <div class="tool-btn" id="trash-btn-high" onclick="toggleTrashMode('high')">
+                <span>🗑</span>
+                <div class="tooltip">Delete Mode</div>
+            </div>
+            <div class="tool-btn" id="select-btn-high" onclick="toggleSelectMode('high')">
+                <span>✓</span>
+                <div class="tooltip">Select Mode</div>
+            </div>
+            <div class="tool-btn" id="grid-btn-high" onclick="toggleGrid('high')">
+                <span>#</span>
+                <div class="tooltip">Toggle Grid</div>
+            </div>
+        </div>
+        <div class="transform-controls" id="transform-controls-high">
+            <div class="transform-row">
+                <span class="transform-label">Rotate:</span>
+                <div class="transform-btn" onclick="rotateSelected('high', -90)" title="Rotate Left">↺</div>
+                <div class="transform-btn" onclick="rotateSelected('high', 90)" title="Rotate Right">↻</div>
+            </div>
+            <div class="transform-row">
+                <span class="transform-label">Flip:</span>
+                <div class="transform-btn" onclick="flipSelected('high', 'horizontal')" title="Flip Horizontal">↔</div>
+                <div class="transform-btn" onclick="flipSelected('high', 'vertical')" title="Flip Vertical">↕</div>
+            </div>
+            <div class="transform-row">
+                <div class="transform-btn" onclick="clearSelection('high')" style="width: 100%;" title="Clear Selection">Clear Selection</div>
+            </div>
+        </div>
+        <div class="density-indicator">
+            <div class="density-label">
+                <span>Community Density</span>
+                <span class="density-percentage" id="density-percentage-high">0%</span>
+            </div>
+            <div class="density-bar-container">
+                <div class="density-bar-fill" id="density-bar-high" style="width: 0%;"></div>
+            </div>
+        </div>
+        <div class="layout-canvas" id="layout-canvas-high">
+            <div class="layout-viewport" id="layout-viewport-high"></div>
+        </div>
+        <div class="zoom-controls">
+            <div class="zoom-btn" onclick="zoomIn('high')">+</div>
+            <div class="zoom-level" id="zoom-level-high">100%</div>
+            <div class="zoom-btn" onclick="zoomOut('high')">−</div>
+            <div class="zoom-btn" onclick="resetZoom('high')">⊙</div>
+        </div>
+        <button class="next-btn-bottom" onclick="finishLayout('high')" style="position: fixed; bottom: 2rem; right: 13rem;">Finish Layout</button>
+    </div>
+</div>
+
+<!-- ASSET DETAILS PAGES -->
+<div id="assetDetailsLow" class="hidden">
+    <div class="section">
+        <div>
+            <h2>Asset Details</h2>
+            <div class="image-boxes"></div>
+            <button class="next-btn" onclick="completeProject('low')">Complete</button>
+        </div>
+    </div>
+</div>
+
+<div id="assetDetailsMedium" class="hidden">
+    <div class="section">
+        <div>
+            <h2>Asset Details</h2>
+            <div class="image-boxes"></div>
+            <button class="next-btn" onclick="completeProject('medium')">Complete</button>
+        </div>
+    </div>
+</div>
+
+<div id="assetDetailsHigh" class="hidden">
+    <div class="section">
+        <div>
+            <h2>Asset Details</h2>
+            <div class="image-boxes"></div>
+            <button class="next-btn" onclick="completeProject('high')">Complete</button>
+        </div>
+    </div>
+</div>
+<div id="summaryPage" class="hidden">
+    <div class="section">
+        <div>
+            <h1 id="summaryTitle" style="max-width: 1400px; line-height: 1.3;"></h1>
+        </div>
+    </div>
+</div>
+
+<!-- Image Modal -->
+<div id="imageModal" class="image-modal" onclick="closeImageModal()">
+    <span class="image-modal-close" onclick="closeImageModal()">&times;</span>
+    <img id="modalImage" class="image-modal-content" src="" alt="Enlarged view">
+</div>
+
+    <script src="script.js"></script>
+</body>
+</html>
