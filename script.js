@@ -950,14 +950,15 @@ function calculateDensity(page) {
     densityPercentage = Math.max(0, Math.min(100, densityPercentage));
 
     // Determine density level based on percentage
+    // Adjusted thresholds to be less sensitive - lower thresholds for low density
     var level;
-    if (densityPercentage >= 85) {
+    if (densityPercentage >= 80) {
         level = 'very-high';
-    } else if (densityPercentage >= 70) {
+    } else if (densityPercentage >= 60) {
         level = 'high';
-    } else if (densityPercentage >= 50) {
+    } else if (densityPercentage >= 40) {
         level = 'medium';
-    } else if (densityPercentage >= 30) {
+    } else if (densityPercentage >= 20) {
         level = 'low';
     } else {
         level = 'very-low';
