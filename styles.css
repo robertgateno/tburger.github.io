@@ -1293,13 +1293,14 @@ body {
     right: 0;
     background: rgba(0, 0, 0, 0.75);
     color: #fff;
-    font-size: 0.65rem;
+    font-size: 0.55rem;
     font-weight: 700;
     text-align: center;
-    padding: 2px 4px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    padding: 3px 2px;
+    line-height: 1.1;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
     pointer-events: none;
 }
 
