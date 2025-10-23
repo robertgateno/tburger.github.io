@@ -1097,10 +1097,32 @@ body {
     min-height: 600px;
     overflow: auto;
     cursor: grab;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
 }
 
 .layout-canvas:active {
     cursor: grabbing;
+}
+
+/* Smoother scrollbar */
+.layout-canvas::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+.layout-canvas::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.layout-canvas::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+.layout-canvas::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.5);
 }
 
 .layout-canvas.grid-off {

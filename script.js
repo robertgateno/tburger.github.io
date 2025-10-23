@@ -1480,6 +1480,9 @@ function enableCanvasPan(page) {
     var scrollLeft = 0;
     var scrollTop = 0;
 
+    // Add smooth scrolling
+    canvas.style.scrollBehavior = 'auto';
+
     canvas.addEventListener('mousedown', function(e) {
         // Only pan if clicking on the canvas/viewport itself (not on an icon or street grid)
         var isIcon = e.target.classList.contains('layout-icon') || e.target.closest('.layout-icon');
@@ -1492,37 +1495,42 @@ function enableCanvasPan(page) {
         if (!isIcon && isStreetGrid) {
             isPanning = true;
             canvas.style.cursor = 'grabbing';
-            startX = e.pageX - canvas.offsetLeft;
-            startY = e.pageY - canvas.offsetTop;
+            canvas.style.userSelect = 'none';
+            startX = e.clientX;
+            startY = e.clientY;
             scrollLeft = canvas.scrollLeft;
             scrollTop = canvas.scrollTop;
             e.preventDefault();
         }
     });
 
-    canvas.addEventListener('mouseleave', function() {
+    document.addEventListener('mouseleave', function() {
         if (isPanning) {
             isPanning = false;
             canvas.style.cursor = 'grab';
+            canvas.style.userSelect = '';
         }
     });
 
-    canvas.addEventListener('mouseup', function() {
+    document.addEventListener('mouseup', function() {
         if (isPanning) {
             isPanning = false;
             canvas.style.cursor = 'grab';
+            canvas.style.userSelect = '';
         }
     });
 
-    canvas.addEventListener('mousemove', function(e) {
+    document.addEventListener('mousemove', function(e) {
         if (!isPanning) return;
         e.preventDefault();
-        var x = e.pageX - canvas.offsetLeft;
-        var y = e.pageY - canvas.offsetTop;
-        var walkX = (x - startX) * 2; // Multiply for faster panning
-        var walkY = (y - startY) * 2;
-        canvas.scrollLeft = scrollLeft - walkX;
-        canvas.scrollTop = scrollTop - walkY;
+
+        // Calculate movement distance
+        var deltaX = e.clientX - startX;
+        var deltaY = e.clientY - startY;
+
+        // Apply scroll with smoother multiplier
+        canvas.scrollLeft = scrollLeft - deltaX;
+        canvas.scrollTop = scrollTop - deltaY;
     });
 
     // Set initial cursor
