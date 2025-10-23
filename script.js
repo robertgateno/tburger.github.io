@@ -798,6 +798,12 @@ function createStreetGrid(viewport) {
 // Layout page functions
 function createLayoutIcons(page) {
     var viewport = document.getElementById('layout-viewport-' + page);
+
+    if (!viewport) {
+        console.error('Viewport not found for page: ' + page);
+        return;
+    }
+
     viewport.innerHTML = ''; // Clear previous icons
 
     // Create street grid first
