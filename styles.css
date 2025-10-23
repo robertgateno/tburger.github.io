@@ -1472,6 +1472,67 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
+/* Asset Cards */
+.asset-card {
+    background: #fff;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.asset-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    border-color: #3b82f6;
+}
+
+.asset-card.selected {
+    border-color: #3b82f6;
+    border-width: 3px;
+    background: #eff6ff;
+}
+
+.asset-card-image {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    background: #f3f4f6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.asset-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.asset-card:hover .asset-card-image img {
+    transform: scale(1.05);
+}
+
+.asset-card-content {
+    padding: 1.5rem;
+}
+
+.asset-card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+}
+
+.asset-card-cost {
+    font-size: 1rem;
+    color: #6b7280;
+    font-weight: 500;
+}
+
 @media (max-width: 768px) {
     .cover-title {
         font-size: 3rem;
