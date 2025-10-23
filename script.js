@@ -1467,6 +1467,7 @@ function resetZoom(page) {
 // Pan/drag canvas functions
 function enableCanvasPan(page) {
     var canvas = document.getElementById('layout-canvas-' + page);
+    var viewport = document.getElementById('layout-viewport-' + page);
     var isPanning = false;
     var startX = 0;
     var startY = 0;
@@ -1474,8 +1475,15 @@ function enableCanvasPan(page) {
     var scrollTop = 0;
 
     canvas.addEventListener('mousedown', function(e) {
-        // Only pan if clicking on the canvas itself (not on an icon)
-        if (!e.target.classList.contains('layout-icon') && !e.target.closest('.layout-icon')) {
+        // Only pan if clicking on the canvas/viewport itself (not on an icon or street grid)
+        var isIcon = e.target.classList.contains('layout-icon') || e.target.closest('.layout-icon');
+        var isStreetGrid = e.target.classList.contains('street-grid') ||
+                          e.target.classList.contains('city-block') ||
+                          e.target.classList.contains('park-block') ||
+                          e.target.classList.contains('street-h') ||
+                          e.target.classList.contains('street-v');
+
+        if (!isIcon && isStreetGrid) {
             isPanning = true;
             canvas.style.cursor = 'grabbing';
             startX = e.pageX - canvas.offsetLeft;
