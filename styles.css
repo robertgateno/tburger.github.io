@@ -1110,8 +1110,8 @@ body {
 .layout-viewport {
     position: relative;
     transform-origin: 0 0;
-    width: 5760px;
-    height: 5760px;
+    width: 1620px;
+    height: 1620px;
 }
 
 /* Street Grid Overlay */
@@ -1300,6 +1300,7 @@ body {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    pointer-events: none;
 }
 
 .cover-page {

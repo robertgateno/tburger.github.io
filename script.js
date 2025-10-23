@@ -733,10 +733,10 @@ function createStreetGrid(viewport) {
     var streetGrid = document.createElement('div');
     streetGrid.className = 'street-grid';
 
-    var streetWidth = 40; // Width of streets
-    var blockSize = 320; // Size of each city block (4 lots x 80px)
-    var gridRows = 16; // 16x16 grid = 256 blocks
-    var gridCols = 16;
+    var streetWidth = 60; // Width of streets
+    var blockSize = 500; // Size of each city block - larger to fill screen
+    var gridRows = 3; // 3x3 grid = 9 blocks
+    var gridCols = 3;
 
     // Create horizontal streets (15 streets for 16 rows)
     for (var i = 1; i < gridRows; i++) {
@@ -756,10 +756,10 @@ function createStreetGrid(viewport) {
         streetGrid.appendChild(streetEl);
     }
 
-    // Create city blocks (256 blocks total)
-    // Randomly select blocks to be parks (about 5-8% of blocks)
+    // Create city blocks (9 blocks total for 3x3)
+    // Randomly select blocks to be parks (about 11% of blocks)
     var totalBlocks = gridRows * gridCols;
-    var numParks = Math.floor(totalBlocks * 0.06); // 6% will be parks (~15 parks)
+    var numParks = Math.floor(totalBlocks * 0.11); // 11% will be parks (~1 park)
     var parkIndices = [];
 
     // Generate random unique park indices
