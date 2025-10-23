@@ -896,6 +896,9 @@ function createLayoutIcons(page) {
 
     // Setup zoom with mouse wheel
     setupZoom(page);
+
+    // Enable canvas panning
+    enableCanvasPan(page);
 }
 
 function calculateDensity(page) {
@@ -984,66 +987,83 @@ function updateDensityDisplay(page) {
 }
 
 function enableDragAndDrop(viewport) {
-    var draggedElement = null;
-    var offsetX = 0;
-    var offsetY = 0;
+    var draggedIcon = null;
+    var isDraggingIcon = false;
+    var startX = 0;
+    var startY = 0;
+    var iconStartX = 0;
+    var iconStartY = 0;
 
     // Extract page name from viewport id (e.g., 'layout-viewport-low' -> 'low')
     var page = viewport.id.replace('layout-viewport-', '');
 
-    // Attach dragstart to document to catch events from icons
-    document.addEventListener('dragstart', function(e) {
-        if (e.target.classList.contains('layout-icon') && e.target.parentElement === viewport) {
-            draggedElement = e.target;
-            draggedElement.classList.add('dragging');
+    // Use mousedown/mousemove/mouseup instead of drag events for better control
+    viewport.addEventListener('mousedown', function(e) {
+        // Check if clicking on an icon
+        if (e.target.classList.contains('layout-icon') || e.target.closest('.layout-icon')) {
+            var icon = e.target.classList.contains('layout-icon') ? e.target : e.target.closest('.layout-icon');
+
+            // Don't drag if in select mode or trash mode
+            if (selectMode[page] || trashMode[page]) {
+                return;
+            }
+
+            e.preventDefault();
+            e.stopPropagation();
+
+            draggedIcon = icon;
+            isDraggingIcon = true;
 
             var scale = zoomLevel[page];
-
-            // Calculate offset within the icon, accounting for zoom
             var viewportRect = viewport.getBoundingClientRect();
 
-            // Get the icon's current position in viewport coordinates
-            var iconX = parseFloat(draggedElement.style.left) || 0;
-            var iconY = parseFloat(draggedElement.style.top) || 0;
+            // Get current icon position
+            iconStartX = parseFloat(icon.style.left) || 0;
+            iconStartY = parseFloat(icon.style.top) || 0;
 
-            // Calculate offset from click position to icon origin
-            offsetX = (e.clientX - viewportRect.left) / scale - iconX;
-            offsetY = (e.clientY - viewportRect.top) / scale - iconY;
+            // Store start mouse position
+            startX = e.clientX;
+            startY = e.clientY;
+
+            icon.classList.add('dragging');
         }
     });
 
-    document.addEventListener('dragend', function(e) {
-        if (draggedElement && e.target === draggedElement) {
-            draggedElement.classList.remove('dragging');
-            draggedElement = null;
+    document.addEventListener('mousemove', function(e) {
+        if (isDraggingIcon && draggedIcon) {
+            e.preventDefault();
+
+            var scale = zoomLevel[page];
+            var viewportRect = viewport.getBoundingClientRect();
+
+            // Calculate mouse movement
+            var deltaX = (e.clientX - startX) / scale;
+            var deltaY = (e.clientY - startY) / scale;
+
+            // Apply to icon position
+            var newX = iconStartX + deltaX;
+            var newY = iconStartY + deltaY;
+
+            // Constrain to viewport bounds
+            var maxX = viewport.offsetWidth - draggedIcon.offsetWidth;
+            var maxY = viewport.offsetHeight - draggedIcon.offsetHeight;
+            newX = Math.max(0, Math.min(newX, maxX));
+            newY = Math.max(0, Math.min(newY, maxY));
+
+            draggedIcon.style.left = newX + 'px';
+            draggedIcon.style.top = newY + 'px';
+        }
+    });
+
+    document.addEventListener('mouseup', function(e) {
+        if (isDraggingIcon && draggedIcon) {
+            draggedIcon.classList.remove('dragging');
 
             // Update density after dragging stops
             updateDensityDisplay(page);
-        }
-    });
 
-    viewport.addEventListener('dragover', function(e) {
-        e.preventDefault();
-    });
-
-    viewport.addEventListener('drop', function(e) {
-        e.preventDefault();
-        if (draggedElement) {
-            var viewportRect = viewport.getBoundingClientRect();
-            var scale = zoomLevel[page];
-
-            // Calculate position accounting for zoom
-            var x = (e.clientX - viewportRect.left) / scale - offsetX;
-            var y = (e.clientY - viewportRect.top) / scale - offsetY;
-
-            // Constrain to viewport bounds
-            var maxX = viewport.offsetWidth - draggedElement.offsetWidth;
-            var maxY = viewport.offsetHeight - draggedElement.offsetHeight;
-            x = Math.max(0, Math.min(x, maxX));
-            y = Math.max(0, Math.min(y, maxY));
-
-            draggedElement.style.left = x + 'px';
-            draggedElement.style.top = y + 'px';
+            draggedIcon = null;
+            isDraggingIcon = false;
         }
     });
 }
@@ -1441,6 +1461,57 @@ function zoomOut(page) {
 function resetZoom(page) {
     zoomLevel[page] = 1;
     applyZoom(page);
+}
+
+// Pan/drag canvas functions
+function enableCanvasPan(page) {
+    var canvas = document.getElementById('layout-canvas-' + page);
+    var isPanning = false;
+    var startX = 0;
+    var startY = 0;
+    var scrollLeft = 0;
+    var scrollTop = 0;
+
+    canvas.addEventListener('mousedown', function(e) {
+        // Only pan if clicking on the canvas itself (not on an icon)
+        if (!e.target.classList.contains('layout-icon') && !e.target.closest('.layout-icon')) {
+            isPanning = true;
+            canvas.style.cursor = 'grabbing';
+            startX = e.pageX - canvas.offsetLeft;
+            startY = e.pageY - canvas.offsetTop;
+            scrollLeft = canvas.scrollLeft;
+            scrollTop = canvas.scrollTop;
+            e.preventDefault();
+        }
+    });
+
+    canvas.addEventListener('mouseleave', function() {
+        if (isPanning) {
+            isPanning = false;
+            canvas.style.cursor = 'grab';
+        }
+    });
+
+    canvas.addEventListener('mouseup', function() {
+        if (isPanning) {
+            isPanning = false;
+            canvas.style.cursor = 'grab';
+        }
+    });
+
+    canvas.addEventListener('mousemove', function(e) {
+        if (!isPanning) return;
+        e.preventDefault();
+        var x = e.pageX - canvas.offsetLeft;
+        var y = e.pageY - canvas.offsetTop;
+        var walkX = (x - startX) * 2; // Multiply for faster panning
+        var walkY = (y - startY) * 2;
+        canvas.scrollLeft = scrollLeft - walkX;
+        canvas.scrollTop = scrollTop - walkY;
+    });
+
+    // Set initial cursor
+    canvas.style.cursor = 'grab';
 }
 
 // Image modal functions
