@@ -379,19 +379,31 @@ function toggleOwnershipCard(page, type, card) {
     }
 }
 
-function toggleAssetCard(page, assetType, card) {
+function toggleAssetCard(page, assetType, cardOrEvent) {
+    // Handle both direct card reference and event bubbling
+    var card = cardOrEvent;
+    if (cardOrEvent.target) {
+        // This is an event object, find the card
+        card = cardOrEvent.currentTarget || cardOrEvent.target.closest('.unit-compact-card') || cardOrEvent.target.closest('.asset-card');
+    }
+
+    if (!card) {
+        console.error('Could not find card element');
+        return;
+    }
+
     var checkbox = card.querySelector('.simple-checkbox');
 
     // Toggle selection
     if (selectedAssets[page][assetType]) {
         // Deselect
         delete selectedAssets[page][assetType];
-        checkbox.classList.remove('checked');
+        if (checkbox) checkbox.classList.remove('checked');
         card.classList.remove('selected');
     } else {
         // Select
         selectedAssets[page][assetType] = true;
-        checkbox.classList.add('checked');
+        if (checkbox) checkbox.classList.add('checked');
         card.classList.add('selected');
     }
 
