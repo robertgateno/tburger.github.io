@@ -5,12 +5,12 @@ var ownershipSelections = { low: [], medium: [], high: [] };
 var assetSelections = { low: [], medium: [], high: [] };
 var selectedAssets = { low: {}, medium: {}, high: {} };
 var assetImages = {
-    'event-space': 'IMAGES/eventCenter.pdf',
-    'primary-school': 'IMAGES/primarySchool.pdf',
-    'secondary-education': 'IMAGES/specialEducation.pdf',
-    'daycare': 'IMAGES/childhoodCare.pdf',
-    'convenience-store': 'IMAGES/groceryStore.pdf',
-    'resource-lab': 'IMAGES/resourceLab.pdf'
+    'event-space': 'IMAGES/eventCenter.png',
+    'primary-school': 'IMAGES/primarySchool.png',
+    'secondary-education': 'IMAGES/specialEducation.png',
+    'daycare': 'IMAGES/childhoodCare.png',
+    'convenience-store': 'IMAGES/groceryStore.png',
+    'resource-lab': 'IMAGES/resourceLab.png'
 };
 
 var assetNames = {
@@ -23,10 +23,10 @@ var assetNames = {
 };
 
 var unitImages = {
-    'studio': 'IMAGES/studioPlan.pdf',
-    'one-bedroom': 'IMAGES/1bedPlan.pdf',
-    'two-bedroom': 'IMAGES/2bedPlan.pdf',
-    'three-bedroom': 'IMAGES/3bedPlan.pdf'
+    'studio': 'IMAGES/studioPlan.png',
+    'one-bedroom': 'IMAGES/1bedPlan.png',
+    'two-bedroom': 'IMAGES/2bedPlan.png',
+    'three-bedroom': 'IMAGES/3bedPlan.png'
 };
 
 var unitNames = {
